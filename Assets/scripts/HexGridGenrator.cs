@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
+
 
 public class HexGrid : MonoBehaviour
 {
+
     public GameObject hexPrefab;
+    [Header ("map size")]
     public int width = 10;
     public int height = 10;
     public float hexSize = 1f;
+    
     private Dictionary<Vector2Int, HexTileScript> hexTiles = new Dictionary<Vector2Int, HexTileScript>();
 
     void Start()
@@ -18,6 +21,9 @@ public class HexGrid : MonoBehaviour
 
     void GenerateGrid()
     {
+        
+
+
         float xOffset = hexSize * Mathf.Sqrt(3);
         float yOffset = hexSize * 1.5f;
 
@@ -39,5 +45,17 @@ public class HexGrid : MonoBehaviour
                 hexTiles[hexCoord] = hexTile;
             }
         }
+
+        // Find neighbors for all tiles
+        foreach (var tile in hexTiles.Values)
+        {
+            tile.FindNeighbors(hexTiles);
+        }
     }
+
+    public Dictionary<Vector2Int, HexTileScript> GetAllTiles()
+    {
+        return hexTiles;
+    }
+
 }

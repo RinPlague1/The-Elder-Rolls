@@ -24,7 +24,7 @@ public class HexTileScript : MonoBehaviour
         }
         else
         {
-            gameObject.tag = "HexTile"; // Ensure other tiles have the correct tag
+            gameObject.tag = "HexTile";
         }
 
         GetComponent<Renderer>().material.color = GetBiomeColor();
@@ -43,6 +43,42 @@ public class HexTileScript : MonoBehaviour
             default: return Color.white;
         }
     }
-}
 
-public enum BiomeType { Grass, Desert, Ocean, Mountain, Forest }
+    public void FindNeighbors(Dictionary<Vector2Int, HexTileScript> allTiles)
+    {
+        neighbors.Clear(); // Clear old neighbors before assigning new ones
+
+        Vector2Int[] possibleOffsets = new Vector2Int[]
+        {
+        new Vector2Int(1, 0), new Vector2Int(-1, 0),
+        new Vector2Int(0, 1), new Vector2Int(0, -1),
+        new Vector2Int(coordinates.y % 2 == 0 ? -1 : 1, 1),
+        new Vector2Int(coordinates.y % 2 == 0 ? -1 : 1, -1)
+        };
+
+        foreach (var offset in possibleOffsets)
+        {
+            Vector2Int neighborCoord = coordinates + offset;
+            if (allTiles.ContainsKey(neighborCoord))
+            {
+                HexTileScript neighborTile = allTiles[neighborCoord];
+
+                if (neighborTile.gameObject.tag != "Barrier")  // Ensure it's walkable
+                {
+                    neighbors.Add(neighborTile);
+                    Debug.Log($"Added neighbor: {neighborTile.coordinates} to Tile {coordinates}");
+                }
+                else
+                {
+                    Debug.Log($"Skipping barrier tile: {neighborTile.coordinates}");
+                }
+            }
+        }
+
+        Debug.Log($"Tile {coordinates} has {neighbors.Count} neighbors.");
+    }
+
+
+
+}
+public enum BiomeType { Grass, Desert, Ocean, Mountain, Forest}

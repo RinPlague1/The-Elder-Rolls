@@ -1,40 +1,107 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    private HexGrid hexGrid;
+    private HexTileScript currentTile;
+    public GameObject meshRenderer;
+
+    HexTileScript targetTile;
+
+    void Start()
+    {
+        hexGrid = FindObjectOfType<HexGrid>();
+        SetInitialPosition();
+    }
+
+    void SetInitialPosition()
+    {
+        Dictionary<Vector2Int, HexTileScript> allTiles = hexGrid.GetAllTiles();
+
+        // Find the first non-barrier tile
+        foreach (var tile in allTiles.Values)
+        {
+            if (tile.gameObject.tag != "Barrier")
+            {
+                currentTile = tile;
+                meshRenderer.transform.position = tile.transform.position + Vector3.up * 0.5f; // Adjust height if needed
+                break;
+            }
+        }
+    }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f); // Draw a red ray
+
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider.CompareTag("HexTile"))
                 {
-                   
+                    targetTile = hit.collider.GetComponent<HexTileScript>();
 
-                    StopAllCoroutines();
-                    StartCoroutine(MoveToTile(hit.transform.position));
-                }
-                if (hit.collider.CompareTag("Barrier"))
-                {
-                    return; // Prevent movement onto ocean or mountain tiles
-                }
+                    Debug.Log($"Clicked Tile: {targetTile.coordinates}");
+                    Debug.Log($"Current Tile: {currentTile.coordinates}");
 
+                    Debug.Log($"Current Tile {currentTile.coordinates} has {currentTile.neighbors.Count} neighbors.");
+                    foreach (HexTileScript neighbor in currentTile.neighbors)
+                    {
+                        Debug.Log($"Neighbor Tile: {neighbor.coordinates}");
+                    }
+
+                    bool isNeighbor = false;
+                    foreach (HexTileScript neighbor in currentTile.neighbors)
+                    {
+                        Debug.Log("neighbor: " + neighbor.coordinates + " target tile:" + targetTile.coordinates);
+                        if (neighbor.coordinates == targetTile.coordinates)  // Direct reference check
+                        {
+                            isNeighbor = true;
+                            break;
+                        }
+                    }
+
+                    if (isNeighbor)
+                    {
+                        Debug.Log("Neighbor check PASSED - Moving Player!");
+                        StopAllCoroutines();
+                        StartCoroutine(MoveToTile(targetTile));
+                    }
+                    else
+                    {
+                        Debug.Log("Neighbor check FAILED - Tile is NOT a neighbor!");
+                    }
+                }
             }
         }
     }
 
-    System.Collections.IEnumerator MoveToTile(Vector3 targetPos)
+
+
+    IEnumerator MoveToTile(HexTileScript targetTile)
     {
-        while (Vector3.Distance(transform.position, targetPos) > 0.1f)
+        Vector3 startPos = transform.position;
+        Vector3 endPos = targetTile.transform.position;
+        endPos.y = startPos.y; // Maintain player's height
+
+        float elapsedTime = 0f;
+        float moveDuration = Vector3.Distance(startPos, endPos) / moveSpeed;
+
+        while (elapsedTime < moveDuration)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        transform.position = endPos;
+        currentTile = targetTile; // Update current tile
     }
 }

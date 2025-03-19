@@ -3,15 +3,15 @@
   "WorkspaceRootPath": "D:\\S5611581\\The elder rolls\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|D:\\S5611581\\The elder rolls\\assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|d:\\s5611581\\the elder rolls\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|D:\\S5611581\\The elder rolls\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|d:\\s5611581\\the elder rolls\\assets\\scripts\\hexgridgenrator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|d:\\s5611581\\the elder rolls\\assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|D:\\S5611581\\The elder rolls\\assets\\scripts\\hexgridgenrator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4CD48DBB-695F-F089-D9A4-291F993C8873}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hexgridgenrator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -22,30 +22,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "D:\\S5611581\\The elder rolls\\Assets\\scripts\\PlayerController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PlayerController.cs",
               "ToolTip": "D:\\S5611581\\The elder rolls\\Assets\\scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\scripts\\PlayerController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAARAAAA",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwBwAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T10:38:36.231Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "HexTileScript.cs",
               "DocumentMoniker": "D:\\S5611581\\The elder rolls\\Assets\\scripts\\HexTileScript.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\HexTileScript.cs",
               "ToolTip": "D:\\S5611581\\The elder rolls\\Assets\\scripts\\HexTileScript.cs",
               "RelativeToolTip": "Assets\\scripts\\HexTileScript.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC4AAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T10:23:29.384Z",
               "EditorCaption": ""
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "Assets\\scripts\\HexGridGenrator.cs",
               "ToolTip": "D:\\S5611581\\The elder rolls\\Assets\\scripts\\HexGridGenrator.cs",
               "RelativeToolTip": "Assets\\scripts\\HexGridGenrator.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAB3AAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAADkAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T10:21:32.954Z",
               "EditorCaption": ""
