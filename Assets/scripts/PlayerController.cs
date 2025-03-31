@@ -8,10 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     private HexGrid hexGrid;
-    private HexTileScript currentTile;
-    public GameObject meshRenderer;
+    public HexTileScript currentTile;
 
-    HexTileScript targetTile;
+    public HexTileScript targetTile;
 
     void Start()
     {
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
             if (tile.gameObject.tag != "Barrier")
             {
                 currentTile = tile;
-                meshRenderer.transform.position = tile.transform.position + Vector3.up * 0.5f; // Adjust height if needed
+                transform.position = tile.transform.position + Vector3.up * 0.5f; // Adjust height if needed
                 break;
             }
         }
@@ -46,26 +45,21 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.collider.CompareTag("HexTile"))
                 {
+                    targetTile = null;
+                    int targetX;
+                    int targetY;
                     targetTile = hit.collider.GetComponent<HexTileScript>();
-                    Debug.Log($"TargetTile name: {targetTile.name}");
+                    Debug.Log($"TargetTile name: {targetTile}");
 
-                    int currentX;
-                    int currentY;
+                    targetX = targetTile.coordinates.x;
+                    Debug.Log($"target Tile coord X: {targetX}");
 
-                    string stopAt = ",";
+                    targetY = targetTile.coordinates.y;
+                    Debug.Log($"target Tile coord Y: {targetY}");
 
-                    int charLocation = targetTile.name.IndexOf(stopAt, StringComparison.Ordinal);
+                    Vector2Int targetCoordVec = targetTile.coordinates;
 
-                    
-                    currentX = Int32.Parse((targetTile.name.Substring(4, charLocation)));
-                    currentY = Int32.Parse((targetTile.name.Substring(charLocation + 1, targetTile.name.Length -1)));
-
-                    
-
-                    Vector2Int currentCoords = new Vector2Int(currentX,currentY);
-
-
-                    Debug.Log($"Current Tile: {currentCoords}");
+                    Debug.Log($"target Tile coord vector: {targetCoordVec}");
 
                     Debug.Log($"Current Tile {currentTile.coordinates} has {currentTile.neighbors.Count} neighbors.");
                     foreach (HexTileScript neighbor in currentTile.neighbors)
@@ -76,9 +70,10 @@ public class PlayerController : MonoBehaviour
                     bool isNeighbor = false;
                     foreach (HexTileScript neighbor in currentTile.neighbors)
                     {
-                        Debug.Log("neighbor: " + neighbor.coordinates + " target tile:" + targetTile.coordinates);
-                        if (neighbor.coordinates == targetTile.coordinates)  // Direct reference check
+                        Debug.Log("neighbor: " + neighbor.coordinates + " target tile:" + targetCoordVec);
+                        if (neighbor.name == targetTile.name)  // Direct reference check
                         {
+                            Debug.Log("Is a Neighbor");
                             isNeighbor = true;
                             break;
                         }
@@ -105,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 startPos = transform.position;
         Vector3 endPos = targetTile.transform.position;
+        Debug.Log($"target tile transform: {targetTile.transform.position}");
         endPos.y = startPos.y; // Maintain player's height
 
         float elapsedTime = 0f;
@@ -112,12 +108,15 @@ public class PlayerController : MonoBehaviour
 
         while (elapsedTime < moveDuration)
         {
-            transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
+            //transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
+            transform.position = endPos;
+            
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.position = endPos;
         currentTile = targetTile; // Update current tile
+        Debug.Log($"current tile reassigned: {currentTile}");
     }
 }
