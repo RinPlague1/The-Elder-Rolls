@@ -47,9 +47,25 @@ public class PlayerController : MonoBehaviour
                 if (hit.collider.CompareTag("HexTile"))
                 {
                     targetTile = hit.collider.GetComponent<HexTileScript>();
+                    Debug.Log($"TargetTile name: {targetTile.name}");
 
-                    Debug.Log($"Clicked Tile: {targetTile.coordinates}");
-                    Debug.Log($"Current Tile: {currentTile.coordinates}");
+                    int currentX;
+                    int currentY;
+
+                    string stopAt = ",";
+
+                    int charLocation = targetTile.name.IndexOf(stopAt, StringComparison.Ordinal);
+
+                    
+                    currentX = Int32.Parse((targetTile.name.Substring(4, charLocation)));
+                    currentY = Int32.Parse((targetTile.name.Substring(charLocation + 1, targetTile.name.Length -1)));
+
+                    
+
+                    Vector2Int currentCoords = new Vector2Int(currentX,currentY);
+
+
+                    Debug.Log($"Current Tile: {currentCoords}");
 
                     Debug.Log($"Current Tile {currentTile.coordinates} has {currentTile.neighbors.Count} neighbors.");
                     foreach (HexTileScript neighbor in currentTile.neighbors)
