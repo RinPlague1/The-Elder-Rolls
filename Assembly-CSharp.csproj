@@ -63,6 +63,8 @@
     <Compile Include="Assets\scripts\HexGridGenrator.cs" />
     <Compile Include="Assets\scripts\HexTileScript.cs" />
     <Compile Include="Assets\scripts\PlayerController.cs" />
+    <Compile Include="Assets\scripts\Combat_Scripts\Player_Move.cs" />
+    <Compile Include="Assets\scripts\Combat_Scripts\Player_Position.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

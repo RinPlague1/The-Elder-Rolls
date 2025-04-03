@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\the elder rolls\\The-Elder-Rolls\\",
+  "WorkspaceRootPath": "D:\\The-Elder-Rolls\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|d:\\the elder rolls\\the-elder-rolls\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|d:\\the-elder-rolls\\assets\\scripts\\combat_scripts\\player_move.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\combat_scripts\\player_move.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|D:\\the elder rolls\\The-Elder-Rolls\\assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hextilescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|d:\\the-elder-rolls\\assets\\scripts\\combat_scripts\\player_position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A60FF3D6-BF0B-E763-631D-FAAE655B1578}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\combat_scripts\\player_position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HexTileScript.cs",
-              "DocumentMoniker": "D:\\the elder rolls\\The-Elder-Rolls\\Assets\\scripts\\HexTileScript.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\HexTileScript.cs",
-              "ToolTip": "D:\\the elder rolls\\The-Elder-Rolls\\Assets\\scripts\\HexTileScript.cs",
-              "RelativeToolTip": "Assets\\scripts\\HexTileScript.cs",
-              "ViewState": "AQIAACkAAAAAAAAAAAAwwAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "Player_Move.cs",
+              "DocumentMoniker": "D:\\The-Elder-Rolls\\Assets\\scripts\\Combat_Scripts\\Player_Move.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\Combat_Scripts\\Player_Move.cs",
+              "ToolTip": "D:\\The-Elder-Rolls\\Assets\\scripts\\Combat_Scripts\\Player_Move.cs",
+              "RelativeToolTip": "Assets\\scripts\\Combat_Scripts\\Player_Move.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:49:44.712Z",
+              "WhenOpened": "2025-04-03T13:50:21.122Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlayerController.cs",
-              "DocumentMoniker": "D:\\the elder rolls\\The-Elder-Rolls\\Assets\\scripts\\PlayerController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\PlayerController.cs",
-              "ToolTip": "D:\\the elder rolls\\The-Elder-Rolls\\Assets\\scripts\\PlayerController.cs",
-              "RelativeToolTip": "Assets\\scripts\\PlayerController.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAowC4AAAARAAAA",
+              "DocumentIndex": 1,
+              "Title": "Player_Position.cs",
+              "DocumentMoniker": "D:\\The-Elder-Rolls\\Assets\\scripts\\Combat_Scripts\\Player_Position.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\Combat_Scripts\\Player_Position.cs",
+              "ToolTip": "D:\\The-Elder-Rolls\\Assets\\scripts\\Combat_Scripts\\Player_Position.cs",
+              "RelativeToolTip": "Assets\\scripts\\Combat_Scripts\\Player_Position.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:49:44.921Z",
+              "WhenOpened": "2025-04-03T13:31:25.038Z",
               "EditorCaption": ""
             }
           ]
