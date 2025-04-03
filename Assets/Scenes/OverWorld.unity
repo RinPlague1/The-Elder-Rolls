@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 7354470996728939383, guid: 751f0b458d8cde64db5b72cea9c9f786, type: 3}
-  width: 25
-  height: 25
+  width: 100
+  height: 100
   hexSize: 1
 --- !u!4 &587586696
 Transform:
