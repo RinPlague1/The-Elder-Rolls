@@ -32,7 +32,7 @@ public class Player_Move : MonoBehaviour
                 Player.transform.Translate(new Vector3(0, 0, 1));
             }
             else {
-                Console.WriteLine("Cannot move outside bounds");
+               Debug.Log("Cannot move outside bounds");
             }
         }
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -49,12 +49,13 @@ public class Player_Move : MonoBehaviour
         {
             if (Check_Adjacent())
             {
+
                 Destroy(Enemy);
             }
         }
         else if (Input.anyKeyDown)
         {
-            Console.WriteLine("Key Not Bound");
+            Debug.Log("Key Not Bound");
         }
     }
 
@@ -79,6 +80,7 @@ public class Player_Move : MonoBehaviour
                 return true;
             }
         }
+        Debug.Log("Enemy Not Close enough to attack");
         return false;
     }
     void Generate_Combat()
