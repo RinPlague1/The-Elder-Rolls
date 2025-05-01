@@ -127,11 +127,9 @@ public class PlayerController : MonoBehaviour
         if (!tile.beenVisited)
         {
             tile.beenVisited = true;
-
-            if (UnityEngine.Random.value < tile.encounterChance)
-            {
-                TriggerEncounter(tile);
-            }
+                        
+            TriggerEncounter(tile);
+            
         }
 
         currentTile = tile; // Track where the player is
@@ -141,11 +139,18 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log($"Encounter triggered at tile {tile.coordinates} with biome: {tile.biome}");
 
-        Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: Combat");
+        Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: {tile.assignedEncounter}");
 
-        // TODO: You could open a battle scene, show a popup, play a sound, etc.
+        if (tile.assignedEncounter == HexTileScript.encounterType.overworldEncounter)
+        {
+            Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: {tile.assignedSubEncounter}");
+        }
 
-        //+money -money +health -health +item +upgrade, combat
+        // TODO: open  battle scene, show a popup for OWE
+
+
+
+
     }
 
 
