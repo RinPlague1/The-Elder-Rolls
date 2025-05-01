@@ -8,6 +8,8 @@ public class HexTileScript : MonoBehaviour
     public Vector2Int coordinates;
     public BiomeType biome;
     public List<HexTileScript> neighbors = new List<HexTileScript>();
+    public bool beenVisited = false;
+    public float encounterChance = 0.45f;
 
     public void InitializeTile(Vector2Int coords)
     {

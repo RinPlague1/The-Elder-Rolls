@@ -116,7 +116,37 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = endPos;
+        OnStepOntoTile(targetTile);
+    }
+
+
+    private void OnStepOntoTile(HexTileScript tile)
+    {
         currentTile = targetTile; // Update current tile
         Debug.Log($"current tile reassigned: {currentTile}");
+        if (!tile.beenVisited)
+        {
+            tile.beenVisited = true;
+
+            if (UnityEngine.Random.value < tile.encounterChance)
+            {
+                TriggerEncounter(tile);
+            }
+        }
+
+        currentTile = tile; // Track where the player is
     }
+
+    private void TriggerEncounter(HexTileScript tile)
+    {
+        Debug.Log($"Encounter triggered at tile {tile.coordinates} with biome: {tile.biome}");
+
+        Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: Combat");
+
+        // TODO: You could open a battle scene, show a popup, play a sound, etc.
+
+        //+money -money +health -health +item +upgrade, combat
+    }
+
+
 }
