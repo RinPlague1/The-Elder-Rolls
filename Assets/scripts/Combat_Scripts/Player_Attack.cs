@@ -15,4 +15,71 @@ public class Player_Attack : MonoBehaviour
     {
         
     }
+
+    void Attack()
+    {
+        
+    }
+
+    private void Move()
+    {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f); // Draw a red ray
+
+        //    if (Physics.Raycast(ray, out RaycastHit hit))
+        //    {
+        //        if (hit.collider.CompareTag("HexTile"))
+        //        {
+        //            targetTile = null;
+        //            int targetX;
+        //            int targetY;
+        //            targetTile = hit.collider.GetComponent<HexTileScript>();
+        //            Debug.Log($"TargetTile name: {targetTile}");
+
+        //            targetX = targetTile.coordinates.x;
+        //            Debug.Log($"target Tile coord X: {targetX}");
+
+        //            targetY = targetTile.coordinates.y;
+        //            Debug.Log($"target Tile coord Y: {targetY}");
+
+        //            Vector2Int targetCoordVec = targetTile.coordinates;
+
+        //            Debug.Log($"target Tile coord vector: {targetCoordVec}");
+
+        //            Debug.Log($"Current Tile {currentTile.coordinates} has {currentTile.neighbors.Count} neighbors.");
+        //            foreach (HexTileScript neighbor in currentTile.neighbors)
+        //            {
+        //                Debug.Log($"Neighbor Tile: {neighbor.coordinates}");
+        //            }
+
+        //            bool isNeighbor = false;
+        //            foreach (HexTileScript neighbor in currentTile.neighbors)
+        //            {
+        //                Debug.Log("neighbor: " + neighbor.coordinates + " target tile:" + targetCoordVec);
+        //                if (neighbor.name == targetTile.name)  // Direct reference check
+        //                {
+        //                    Debug.Log("Is a Neighbor");
+        //                    isNeighbor = true;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (isNeighbor)
+        //            {
+        //                Debug.Log("Neighbor check PASSED - Moving Player!");
+        //                StopAllCoroutines();
+        //                StartCoroutine(MoveToTile(targetTile));
+        //            }
+        //            else
+        //            {
+        //                Debug.Log("Neighbor check FAILED - Tile is NOT a neighbor!");
+        //            }
+        //        }
+        //    }
+        //}
+    }
+
+
 }
