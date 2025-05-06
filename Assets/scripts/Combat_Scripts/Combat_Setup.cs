@@ -26,16 +26,14 @@ public class Combat_Setup : MonoBehaviour
 
     void Generate_Combat_Grid()
     {
-        float X_Offset = Tile_Size * Mathf.Sqrt(3);
-        float Y_Offset = Tile_Size * 1.5f;
+        float X_Offset = Tile_Size;
+        float Y_Offset = Tile_Size;
 
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
                 Vector3 Position = new Vector3(x * X_Offset, 0, y  * Y_Offset);
-                // if ()y%2 !=0) position.x += X_Offset / 2;
-
                 GameObject TileGO = Instantiate(Combat_Tile_Prefab, Position, Quaternion.identity, transform);
                 Combat_Tile_Script  Combat_Tile = TileGO.GetComponent<Combat_Tile_Script>();
                 Vector2Int Coordinates = new Vector2Int(x, y);
