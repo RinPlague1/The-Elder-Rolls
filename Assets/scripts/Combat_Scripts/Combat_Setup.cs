@@ -2,6 +2,7 @@ using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using static Combat_Setup;
 
 public class Combat_Setup : MonoBehaviour
 {
@@ -11,17 +12,25 @@ public class Combat_Setup : MonoBehaviour
     public int Height;
     public float Tile_Size;
 
-    public enum Obstacles { Log, Wall, Fence, River, Bridge}
+    public enum Obstacles { Log, Wall, Fence, River, Bridge, None}
 
-
+    public GameObject Player;
 
 
     private Dictionary<Vector2Int, Combat_Tile_Script> Combat_Tiles = new Dictionary<Vector2Int, Combat_Tile_Script>();
+
+
+
+    void Set_Initial_Player_Position(Vector2Int Coords)
+    {
+        Player.transform.position = new UnityEngine.Vector3(0.5f + Coords.x, 0, 0.5f + Coords.y);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         Generate_Combat_Grid();
+        Set_Initial_Player_Position(new Vector2Int (0,0));
     }
 
     void Generate_Combat_Grid()
@@ -33,13 +42,13 @@ public class Combat_Setup : MonoBehaviour
         {
             for (int y = 0; y < Height; y++)
             {
-                Vector3 Position = new Vector3(x * X_Offset, 0, y  * Y_Offset);
+                Vector3 Position = new Vector3(x * X_Offset, 0, y * Y_Offset);
                 GameObject TileGO = Instantiate(Combat_Tile_Prefab, Position, Quaternion.identity, transform);
-                Combat_Tile_Script  Combat_Tile = TileGO.GetComponent<Combat_Tile_Script>();
+                Combat_Tile_Script Combat_Tile = TileGO.GetComponent<Combat_Tile_Script>();
                 Vector2Int Coordinates = new Vector2Int(x, y);
 
                 Combat_Tile.Initialize_Tile(Coordinates);
-                Combat_Tile.transform.Rotate(-90f, 0f, 0f);
+                Combat_Tile.transform.Rotate(0f, 0f, 0f);
                 Combat_Tiles.Add(Coordinates, Combat_Tile);
             }
             foreach (var Tile in Combat_Tiles.Values)
@@ -75,6 +84,5 @@ public class Combat_Setup : MonoBehaviour
     {
         return Combat_Tiles;
     }
-
 }
 

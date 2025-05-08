@@ -767,10 +767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395aa0d3a21d30e43b54b83bcac7cdf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Combat_Tile_Prefab: {fileID: 0}
+  Combat_Tile_Prefab: {fileID: 7983938077309116279, guid: acb26c618efc09545a5a042c1d062aa4, type: 3}
   Width: 18
   Height: 15
-  Tile_Size: 0
+  Tile_Size: 1
+  Player: {fileID: 1548519213}
 --- !u!1 &1057993555
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,17 +855,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1548519213}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1562664289}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1057993558
 MonoBehaviour:
@@ -1212,7 +1213,6 @@ GameObject:
   - component: {fileID: 1548519217}
   - component: {fileID: 1548519216}
   - component: {fileID: 1548519215}
-  - component: {fileID: 1548519214}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1220,21 +1220,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1548519214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548519213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4185c18a533b5d840800d302d6b5a9e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 1548519213}
-  Enemy: {fileID: 559568927}
-  Ui: {fileID: 403795958}
 --- !u!65 &1548519215
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1442,6 +1427,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556428724}
   m_CullTransparentMesh: 1
+--- !u!1 &1562664289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1562664291}
+  - component: {fileID: 1562664290}
+  m_Layer: 0
+  m_Name: Movement_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1562664290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562664289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4185c18a533b5d840800d302d6b5a9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1548519213}
+  Enemy: {fileID: 559568927}
+  Ui: {fileID: 0}
+  Current_Tile: {fileID: 0}
+  Target_Tile: {fileID: 0}
+--- !u!4 &1562664291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562664289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.7663794, y: -0.31712723, z: 10.3099165}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700111469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,3 +1713,4 @@ SceneRoots:
   - {fileID: 1374438685}
   - {fileID: 403795959}
   - {fileID: 1013421618}
+  - {fileID: 1562664291}
