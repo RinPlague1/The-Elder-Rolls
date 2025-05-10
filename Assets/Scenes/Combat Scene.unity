@@ -1461,6 +1461,8 @@ MonoBehaviour:
   Ui: {fileID: 0}
   Current_Tile: {fileID: 0}
   Target_Tile: {fileID: 0}
+  Player_Camera: {fileID: 2101530195}
+  Movement_Container: {fileID: 1700111469}
 --- !u!4 &1562664291
 Transform:
   m_ObjectHideFlags: 0
@@ -1696,7 +1698,7 @@ Transform:
   m_GameObject: {fileID: 2101530193}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: 20, z: 1.5}
+  m_LocalPosition: {x: 2, y: 50, z: 1.5}
   m_LocalScale: {x: 0.96465, y: 0.96465, z: 0.96465}
   m_ConstrainProportionsScale: 1
   m_Children: []

@@ -28,7 +28,31 @@ public class Combat_Tile_Script : MonoBehaviour
     {
         if (New_Obstacle <= 0.8)
         {
-         //   Obstacle = new Obstacles()
+            Obstacle = Obstacles.None;
+        }
+        else
+        {
+             New_Obstacle = UnityEngine.Random.Range(0.0f, 1.0f);
+            if (New_Obstacle <= 0.2f)
+            {
+                Obstacle = Obstacles.Log;
+            }
+            else if (New_Obstacle > 0.2f && New_Obstacle <= 0.4f)
+            {
+                Obstacle = Obstacles.Wall;
+            }
+            else if (New_Obstacle > 0.4f && New_Obstacle <= 0.6f)
+            {
+                Obstacle = Obstacles.Fence;
+            }
+            else if (New_Obstacle > 0.6f && New_Obstacle <= 0.8f)
+            {
+                Obstacle = Obstacles.River;
+            }
+            else
+            {
+                Obstacle = Obstacles.Bridge;
+            }
         }
         Update_Tile_Appearance();
     }
@@ -45,6 +69,7 @@ public class Combat_Tile_Script : MonoBehaviour
             Obstacles.River => Color.blue,
             Obstacles.Bridge => Color.black,
             Obstacles.None => Color.green,
+            _ => Color.white,
         };
         GetComponent<Renderer>().material.color = Tile_Colour;
     }

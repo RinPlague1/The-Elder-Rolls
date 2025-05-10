@@ -23,7 +23,7 @@ public class Combat_Setup : MonoBehaviour
 
     void Set_Initial_Player_Position(Vector2Int Coords)
     {
-        Player.transform.position = new UnityEngine.Vector3(0.5f + Coords.x, 0, 0.5f + Coords.y);
+        Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
     }
 
     // Start is called before the first frame update
