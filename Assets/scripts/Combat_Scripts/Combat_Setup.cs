@@ -19,11 +19,19 @@ public class Combat_Setup : MonoBehaviour
 
     private Dictionary<Vector2Int, Combat_Tile_Script> Combat_Tiles = new Dictionary<Vector2Int, Combat_Tile_Script>();
 
+    Combat_Turn_Order Turn_Order;
+
+    Enemy_Generation Generate;
 
 
     void Set_Initial_Player_Position(Vector2Int Coords)
     {
         Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
+
+        for (int i = 0; i < Turn_Order.Enemies.Count; i++) 
+        {
+            Turn_Order.Enemies[i].transform.position = Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height)));
+        }
     }
 
     // Start is called before the first frame update

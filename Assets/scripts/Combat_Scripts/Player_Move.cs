@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
-
 public class Player_Move : MonoBehaviour
 {
     public GameObject Player;
@@ -27,6 +26,7 @@ public class Player_Move : MonoBehaviour
 
     TextMeshPro Movement_Remaining;
 
+    Enemy_Generation Check_Enemy;
 
     void Start()
     {
@@ -100,17 +100,22 @@ public class Player_Move : MonoBehaviour
                         }
                     }
 
-                    if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+                    if (Target_Tile.Coordinates != Check_Enemy.Get_Enemy_Location())
                     {
+                        if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+                        {
 
-                        StopAllCoroutines();
-                        StartCoroutine(Move_To_Tile(Target_Tile));
-                        Debug.Log($"Movement Text:  {Movement_Remaining.text}");
-                        Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
-                        
+                            StopAllCoroutines();
+                            StartCoroutine(Move_To_Tile(Target_Tile));
+                            Debug.Log($"Movement Text:  {Movement_Remaining.text}");
+                            Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
+
+                        }
+                        else
+                        { }
                     }
                     else
-                    { }
+                    { Debug.Log($"Tile is not free"); }
                 }
             }
         }
@@ -130,7 +135,6 @@ public class Player_Move : MonoBehaviour
         End_Pos.y = Player_Camera.transform.position.y; // Maintains camera height
         Player_Camera.transform.position = End_Pos; // Moves Camera with player
         return null;
-
     }
 
     bool Check_Adjacent(Vector2 Current_Coords, Vector2 Target_Coords)

@@ -7,6 +7,8 @@ TagManager:
   - HexTile
   - Barrier
   - Combat_Tile
+  - Combat_Player
+  - Combat_Enemy
   layers:
   - Default
   - TransparentFX
