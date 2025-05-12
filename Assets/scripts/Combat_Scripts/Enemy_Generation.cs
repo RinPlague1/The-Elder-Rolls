@@ -21,7 +21,7 @@ public class Enemy_Generation : MonoBehaviour
 
 
 
-    public Vector2 Get_Enemy_Location()
+    public Vector2Int Get_Enemy_Location()
     {
         Ray Enemy_Ray = new UnityEngine.Ray(Enemy.transform.position + Vector3.up, new Vector3(0, -5, 0));
         if (Physics.Raycast(Enemy_Ray, out RaycastHit Hit_Start))

@@ -26,7 +26,9 @@ public class Player_Move : MonoBehaviour
 
     TextMeshPro Movement_Remaining;
 
-    Enemy_Generation Check_Enemy;
+
+
+
 
     void Start()
     {
@@ -99,8 +101,15 @@ public class Player_Move : MonoBehaviour
                             break;
                         }
                     }
-
-                    if (Target_Tile.Coordinates != Check_Enemy.Get_Enemy_Location())
+                    bool Checker = true;
+                    //for (int i = 0; i < Enemies.Count; i++)
+                    //{
+                    //    if (Target_Tile.Coordinates == Enemies[i].Get_Enemy_Location())
+                    //    {
+                    //      Checker = false; break;
+                    //    }
+                    //}
+                    if (Checker)
                     {
                         if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
                         {

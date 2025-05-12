@@ -16,6 +16,7 @@ public class Combat_Setup : MonoBehaviour
 
     public GameObject Player;
 
+    public List<GameObject> Enemies = new List<GameObject>();
 
     private Dictionary<Vector2Int, Combat_Tile_Script> Combat_Tiles = new Dictionary<Vector2Int, Combat_Tile_Script>();
 
@@ -28,9 +29,14 @@ public class Combat_Setup : MonoBehaviour
     {
         Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
 
-        for (int i = 0; i < Turn_Order.Enemies.Count; i++) 
+        for (int i = 0; i < Enemies.Count; i++) 
         {
-            Turn_Order.Enemies[i].transform.position = Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height)));
+           
+
+            GameObject Enemy_GO = Instantiate(UnityEngine.Object., Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height))), Quaternion.identity, transform);
+            //Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
+
+            Enemies.Add(Enemy_GO);
         }
     }
 

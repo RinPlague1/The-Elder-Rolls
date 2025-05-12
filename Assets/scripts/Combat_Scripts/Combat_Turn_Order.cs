@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Combat_Turn_Order : MonoBehaviour
 {
     public List<GameObject> Turn_Order = new List<GameObject>();
-    public List<GameObject> Enemies = new List<GameObject>();
 
 
     public void Start()
@@ -14,13 +13,9 @@ public class Combat_Turn_Order : MonoBehaviour
         Scene Active_Scene = SceneManager.GetActiveScene();
         foreach (GameObject Entity in Active_Scene.GetRootGameObjects())
         {
-            if( Entity.CompareTag("Combat_Enemy"))
+            if( Entity.CompareTag("Combat_Enemy") || (Entity.CompareTag("Combat_Player")))
             {
-                Enemies.Add(Entity);
-                if (Entity.CompareTag("Combat_Player"))
-                {
-                    Turn_Order.Add(Entity);    
-                }
+                Turn_Order.Add(Entity);
             }
         }
     }
