@@ -72,6 +72,7 @@
     <Compile Include="Assets\scripts\overworld\HexGridGenrator.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Player_Move.cs" />
     <Compile Include="Assets\scripts\Menu_Scripts\Btn_Functions.cs" />
+    <Compile Include="Assets\scripts\overworld\EncounterPopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1051,10 +1052,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MapTileGridCreatorEditor.csproj">
-      <Project>{EF2A42CF-B0E2-112E-851D-CC207A9540DC}</Project>
-      <Name>MapTileGridCreatorEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{41DDC550-88D3-3A80-D7AE-91260AF7AC47}</Project>
       <Name>UnityEditor.UI</Name>
@@ -1062,10 +1059,6 @@
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{17D1EB10-0353-C876-91F5-7C4FE1C40D6D}</Project>
       <Name>UnityEngine.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="MapTileGridCreator.csproj">
-      <Project>{07B4A7E3-0CFD-1D3D-E40B-2DE4AFA4E610}</Project>
-      <Name>MapTileGridCreator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

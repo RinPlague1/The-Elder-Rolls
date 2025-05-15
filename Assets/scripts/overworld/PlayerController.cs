@@ -138,19 +138,15 @@ public class PlayerController : MonoBehaviour
     private void TriggerEncounter(HexTileScript tile)
     {
         Debug.Log($"Encounter triggered at tile {tile.coordinates} with biome: {tile.biome}");
-
-        Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: {tile.assignedEncounter}");
+        Debug.Log($"Encounter Type: {tile.assignedEncounter}");
 
         if (tile.assignedEncounter == HexTileScript.encounterType.overworldEncounter)
         {
-            Debug.Log($"Encounter triggered at tile {tile.coordinates} Encounter Type: {tile.assignedSubEncounter}");
+            Debug.Log($"Sub Encounter: {tile.assignedSubEncounter}");
         }
 
-        // TODO: open  battle scene, show a popup for OWE
-
-
-
-
+        // Show the popup
+        EncounterPopup.Instance.ShowEncounter(tile);
     }
 
 

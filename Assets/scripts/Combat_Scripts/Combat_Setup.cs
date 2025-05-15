@@ -7,6 +7,7 @@ using UnityEngine;
 public class Combat_Setup : MonoBehaviour
 {
     public GameObject Combat_Tile_Prefab;
+    public GameObject Enemy_Prefab;
     [Header("Combat Map Size")]
     public int Width;
     public int Height;
@@ -33,8 +34,8 @@ public class Combat_Setup : MonoBehaviour
         {
            
 
-            GameObject Enemy_GO = Instantiate(UnityEngine.Object., Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height))), Quaternion.identity, transform);
-            //Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
+            GameObject Enemy_GO = Instantiate(Enemy_Prefab, Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height))), Quaternion.identity, transform);
+            Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
 
             Enemies.Add(Enemy_GO);
         }
