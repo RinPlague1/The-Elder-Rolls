@@ -23,20 +23,26 @@ public class Combat_Setup : MonoBehaviour
 
     Combat_Turn_Order Turn_Order;
 
-    Enemy_Generation Generate;
+    public Enemy_Generation Generate;
 
 
     void Set_Initial_Player_Position(Vector2Int Coords)
     {
         Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
+        
+        int Enemy_Count = (int)UnityEngine.Random.Range(1,3);
 
-        for (int i = 0; i < Enemies.Count; i++) 
+        for (int i = 0; i < Enemy_Count; i++) 
         {
-           
 
-            GameObject Enemy_GO = Instantiate(Enemy_Prefab, Generate.Set_Enemy_Position(new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height))), Quaternion.identity, transform);
+
+            Vector2Int playerRandomGenArr = new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height));
+
+            Vector3 generatedPlayerCoords = Generate.Set_Enemy_Position(playerRandomGenArr);
+
+            GameObject Enemy_GO = Instantiate(Enemy_Prefab, generatedPlayerCoords, Quaternion.identity, transform);
+            Debug.Log(Enemy_GO);
             Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
-
             Enemies.Add(Enemy_GO);
         }
     }
@@ -44,6 +50,12 @@ public class Combat_Setup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Generate = GetComponent<Enemy_Generation>();
+        if (Generate == null)
+        {
+            Debug.LogError("Enemy_Generation component not found!");
+        }
+
         Generate_Combat_Grid();
         Set_Initial_Player_Position(new Vector2Int (0,0));
     }

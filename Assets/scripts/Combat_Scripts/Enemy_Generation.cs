@@ -16,7 +16,9 @@ public class Enemy_Generation : MonoBehaviour
 
     public UnityEngine.Vector3 Set_Enemy_Position(Vector2Int Coords)
     {
-         return Enemy.transform.position = new UnityEngine.Vector3(0.05f + Coords.x, 0 , 0.05f + Coords.y);
+        UnityEngine.Vector3 enemyTransform = new UnityEngine.Vector3(0.05f + Coords.x, 0, 0.05f + Coords.y);
+
+        return enemyTransform;
     }
 
 
