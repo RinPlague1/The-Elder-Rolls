@@ -3,10 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public int maxMoves = 5;
+    public int currentMoves;
+    public TextMeshProUGUI movesText;
+
+    public float moveSpeed = 1.0f;
+
     private HexGrid hexGrid;
     public HexTileScript currentTile;
 
@@ -16,6 +22,16 @@ public class PlayerController : MonoBehaviour
     {
         hexGrid = FindObjectOfType<HexGrid>();
         SetInitialPosition();
+        currentMoves = maxMoves; // Initialize moves
+        UpdateMovesUI();
+    }
+
+    void UpdateMovesUI()
+    {
+        if (movesText != null)
+        {
+            movesText.text = $"{currentMoves}/{maxMoves}";
+        }
     }
 
     void SetInitialPosition()
@@ -38,42 +54,26 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // Check if player has moves left
+            if (currentMoves <= 0)
+            {
+                Debug.Log("No moves left!");
+                return;
+            }
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f); // Draw a red ray
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider.CompareTag("HexTile"))
                 {
-                    targetTile = null;
-                    int targetX;
-                    int targetY;
                     targetTile = hit.collider.GetComponent<HexTileScript>();
-                    Debug.Log($"TargetTile name: {targetTile}");
-
-                    targetX = targetTile.coordinates.x;
-                    Debug.Log($"target Tile coord X: {targetX}");
-
-                    targetY = targetTile.coordinates.y;
-                    Debug.Log($"target Tile coord Y: {targetY}");
-
-                    Vector2Int targetCoordVec = targetTile.coordinates;
-
-                    Debug.Log($"target Tile coord vector: {targetCoordVec}");
-
-                    Debug.Log($"Current Tile {currentTile.coordinates} has {currentTile.neighbors.Count} neighbors.");
-                    foreach (HexTileScript neighbor in currentTile.neighbors)
-                    {
-                        Debug.Log($"Neighbor Tile: {neighbor.coordinates}");
-                    }
 
                     bool isNeighbor = false;
                     foreach (HexTileScript neighbor in currentTile.neighbors)
                     {
-                        Debug.Log("neighbor: " + neighbor.coordinates + " target tile:" + targetCoordVec);
-                        if (neighbor.name == targetTile.name)  // Direct reference check
+                        if (neighbor.name == targetTile.name)
                         {
-                            Debug.Log("Is a Neighbor");
                             isNeighbor = true;
                             break;
                         }
@@ -81,20 +81,21 @@ public class PlayerController : MonoBehaviour
 
                     if (isNeighbor)
                     {
-                        Debug.Log("Neighbor check PASSED - Moving Player!");
+                        currentMoves--; // Deduct move
+                        UpdateMovesUI(); // Update UI
                         StopAllCoroutines();
                         StartCoroutine(MoveToTile(targetTile));
-                    }
-                    else
-                    {
-                        Debug.Log("Neighbor check FAILED - Tile is NOT a neighbor!");
                     }
                 }
             }
         }
     }
 
-
+    public void ResetMoves()
+    {
+        currentMoves = maxMoves;
+        UpdateMovesUI();
+    }
 
     IEnumerator MoveToTile(HexTileScript targetTile)
     {
@@ -146,8 +147,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // Show the popup
-        EncounterPopup.Instance.ShowEncounter(tile);
-    }
 
+        if (currentMoves == 0)
+        { 
+        EncounterPopup.Instance.ShowEncounter(tile);
+    
+        }
+    }
 
 }
