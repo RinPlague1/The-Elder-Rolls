@@ -14,7 +14,8 @@ public class EncounterPopup : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public Image encounterIcon;
     public Button confirmButton;
-    public PlayerController playerController;
+
+    public List<GameObject> playerControllers = new List<GameObject>();
 
     [Header("Icons")]
     public Sprite combatIcon;
@@ -97,6 +98,9 @@ public class EncounterPopup : MonoBehaviour
     {
         popupPanel.SetActive(false);
         Time.timeScale = 1f; // Resume game
-        playerController.ResetMoves();
+        
+        
+        //playerControllers[0].GetComponent<PlayerController> 
+        
     }
 }

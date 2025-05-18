@@ -7,14 +7,32 @@ public class Btn_Functions : MonoBehaviour
 {
     public Canvas Main;
     public Canvas Settings;
-    void Open_Settings()
+    public Canvas charCreator;
+
+    public void Open_Settings()
     {
         Main.enabled = false;
         Settings.enabled = true;
+        charCreator.enabled = false;
+    }
+
+    public void CharacterController()
+    {
+        Main.enabled = false;
+        Settings.enabled = false;
+        charCreator.enabled = true;
+
+    }
+
+    public void returnToMenu()
+    {
+        Main.enabled = true;
+        Settings.enabled = false;
+        charCreator.enabled = false;
     }
 
 
-    public void StartGame()
+    public void LoadGame()
     {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
