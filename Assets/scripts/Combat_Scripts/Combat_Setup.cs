@@ -19,11 +19,18 @@ public class Combat_Setup : MonoBehaviour
 
     public List<GameObject> Enemies = new List<GameObject>();
 
+    public List<GameObject> Turns = new List<GameObject>();
+
+
+
+
     private Dictionary<Vector2Int, Combat_Tile_Script> Combat_Tiles = new Dictionary<Vector2Int, Combat_Tile_Script>();
 
-    Combat_Turn_Order Turn_Order;
+    public Combat_Turn_Order Turn_Order;
 
     public Enemy_Generation Generate;
+
+    MeshRenderer _MeshRenderer;
 
 
     void Set_Initial_Player_Position(Vector2Int Coords)
@@ -34,14 +41,15 @@ public class Combat_Setup : MonoBehaviour
 
         for (int i = 0; i < Enemy_Count; i++) 
         {
-
-
             Vector2Int playerRandomGenArr = new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height));
 
             Vector3 generatedPlayerCoords = Generate.Set_Enemy_Position(playerRandomGenArr);
 
+
+
             GameObject Enemy_GO = Instantiate(Enemy_Prefab, generatedPlayerCoords, Quaternion.identity, transform);
             Debug.Log(Enemy_GO);
+
             Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
             Enemies.Add(Enemy_GO);
         }
@@ -57,7 +65,12 @@ public class Combat_Setup : MonoBehaviour
         }
 
         Generate_Combat_Grid();
-        Set_Initial_Player_Position(new Vector2Int (0,0));
+        Set_Initial_Player_Position(new Vector2Int(0, 0));
+        Turns = Turn_Order.Set_Turn_Order();
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            Turns.Add(Enemies[i]);
+        }
     }
 
     void Generate_Combat_Grid()
@@ -65,18 +78,21 @@ public class Combat_Setup : MonoBehaviour
         float X_Offset = Tile_Size;
         float Y_Offset = Tile_Size;
 
-        for (int x = 0; x < Width; x++)
+        for (int x = 0; x <= Width; x++)
         {
-            for (int y = 0; y < Height; y++)
+            for (int y = 0; y <= Height; y++)
             {
-                Vector3 Position = new Vector3(x * X_Offset, 0, y * Y_Offset);
+                Vector3 Position = new Vector3(x * X_Offset, 0f,y * Y_Offset);
                 GameObject TileGO = Instantiate(Combat_Tile_Prefab, Position, Quaternion.identity, transform);
                 Combat_Tile_Script Combat_Tile = TileGO.GetComponent<Combat_Tile_Script>();
                 Vector2Int Coordinates = new Vector2Int(x, y);
-
                 Combat_Tile.Initialize_Tile(Coordinates);
                 Combat_Tile.transform.Rotate(0f, 0f, 0f);
-                Combat_Tiles.Add(Coordinates, Combat_Tile);
+
+
+                _MeshRenderer = TileGO.GetComponentInChildren<       MeshRenderer>();
+                _MeshRenderer.enabled = false;
+                _MeshRenderer.enabled = true;
             }
             foreach (var Tile in Combat_Tiles.Values)
             {
@@ -110,6 +126,15 @@ public class Combat_Setup : MonoBehaviour
     public Dictionary<Vector2Int, Combat_Tile_Script> Get_All_Tiles()
     {
         return Combat_Tiles;
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            _MeshRenderer.enabled = !_MeshRenderer.isVisible;
+        }
     }
 }
 

@@ -14,6 +14,9 @@ public class Player_Move : MonoBehaviour
 {
     public GameObject Player;
     public GameObject Enemy;
+
+    public GameObject Movement_Manager;
+
     public Text Ui;
     private int Speed = 6;
 
@@ -22,18 +25,19 @@ public class Player_Move : MonoBehaviour
 
     public Camera Player_Camera;
 
-    public GameObject Movement_Container;
+//    public GameObject Movement_Container;
 
-    TextMeshPro Movement_Remaining;
+    public TextMeshProUGUI Movement_Remaining;
 
+    public GameObject Turn_Order_Container;
+    public Combat_Turn_Order _Turn_Order;
+    public GameObject Current_Turn;
 
-
-
-
-    void Start()
+    private void Start()
     {
-          Movement_Remaining = Movement_Container.GetComponent<TextMeshPro>();
+        _Turn_Order = Turn_Order_Container.GetComponent<Combat_Turn_Order>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -75,40 +79,15 @@ public class Player_Move : MonoBehaviour
                     Debug.Log($"TargetTile name: {Target_Tile}");
 
                     Target_X = Target_Tile.Coordinates.x;
-                    Debug.Log($"target Tile coord X: {Target_X}");
+
 
                     Target_Y = Target_Tile.Coordinates.y;
-                    Debug.Log($"target Tile coord Y: {Target_Y}");
+
 
                     Vector2Int Target_Coord_Vec = Target_Tile.Coordinates;
 
-                    Debug.Log($"target Tile coord vector: {Target_Coord_Vec}");
-
-                   // Debug.Log($"Current Tile {Current_Tile.Coordinates} has {Current_Tile.Neighbours.Count} neighbors.");
-                    foreach (Combat_Tile_Script neighbor in Current_Tile.Neighbours)
-                    {
-                 //       Debug.Log($"Neighbor Tile: {neighbor.Coordinates}");
-                    }
-
-                    bool isNeighbor = false;
-                    foreach (Combat_Tile_Script neighbor in Current_Tile.Neighbours)
-                    {
-                     //   Debug.Log("neighbor: " + neighbor.Coordinates + " target tile:" + Target_Coord_Vec);
-                        if (neighbor.name == Target_Tile.name)  // Direct reference check
-                        {
-                       //     Debug.Log("Is a Neighbor");
-                            isNeighbor = true;
-                            break;
-                        }
-                    }
+     
                     bool Checker = true;
-                    //for (int i = 0; i < Enemies.Count; i++)
-                    //{
-                    //    if (Target_Tile.Coordinates == Enemies[i].Get_Enemy_Location())
-                    //    {
-                    //      Checker = false; break;
-                    //    }
-                    //}
                     if (Checker)
                     {
                         if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
@@ -118,7 +97,6 @@ public class Player_Move : MonoBehaviour
                             StartCoroutine(Move_To_Tile(Target_Tile));
                             Debug.Log($"Movement Text:  {Movement_Remaining.text}");
                             Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
-
                         }
                         else
                         { }
@@ -127,6 +105,12 @@ public class Player_Move : MonoBehaviour
                     { Debug.Log($"Tile is not free"); }
                 }
             }
+        }
+        if (Speed == 0)
+        {
+            Current_Turn = _Turn_Order.Next_Turn(Player);
+            this.StopAllCoroutines();
+            Movement_Manager.SetActive(false);
         }
     }
 
@@ -143,12 +127,12 @@ public class Player_Move : MonoBehaviour
 
         End_Pos.y = Player_Camera.transform.position.y; // Maintains camera height
         Player_Camera.transform.position = End_Pos; // Moves Camera with player
-        return null;
+        yield return null;
     }
 
     bool Check_Adjacent(Vector2 Current_Coords, Vector2 Target_Coords)
     {
-        if (Math.Abs(Vector2.Distance(Current_Coords, Target_Coords)) < Speed)
+        if (Math.Abs(Vector2.Distance(Current_Coords, Target_Coords)) <= Speed)
         {
            Speed -= (int)Vector2.Distance(Current_Coords, Target_Coords);
             Debug.Log($"Tile in range");
@@ -157,5 +141,12 @@ public class Player_Move : MonoBehaviour
         Debug.Log($"Tile NOT in range");
         return false;
     }
+
+    private void Player_Attack()
+    {
+       
+    }
+
+
 
 }

@@ -627,6 +627,7 @@ GameObject:
   - component: {fileID: 1013421618}
   - component: {fileID: 1013421620}
   - component: {fileID: 1013421621}
+  - component: {fileID: 1013421622}
   m_Layer: 0
   m_Name: Combat_Manager
   m_TagString: Untagged
@@ -668,6 +669,8 @@ MonoBehaviour:
   Tile_Size: 1
   Player: {fileID: 1548519213}
   Enemies: []
+  Turns: []
+  Turn_Order: {fileID: 1013421622}
   Generate: {fileID: 1013421621}
 --- !u!114 &1013421621
 MonoBehaviour:
@@ -683,6 +686,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 6999428097026594093, guid: 769b218632d56c44eb21c094d59bdfe8, type: 3}
   Enemy_Tile: {fileID: 0}
+--- !u!114 &1013421622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013421615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d06ed558a45794eab158758de6443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Turn_Order: []
 --- !u!1 &1057993555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,11 +1385,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1548519213}
   Enemy: {fileID: 0}
+  Movement_Manager: {fileID: 1562664289}
   Ui: {fileID: 0}
   Current_Tile: {fileID: 0}
   Target_Tile: {fileID: 0}
   Player_Camera: {fileID: 2101530195}
-  Movement_Container: {fileID: 1700111469}
+  Movement_Remaining: {fileID: 1700111471}
+  Turn_Order_Container: {fileID: 1013421615}
+  _Turn_Order: {fileID: 0}
+  Current_Turn: {fileID: 0}
 --- !u!4 &1562664291
 Transform:
   m_ObjectHideFlags: 0

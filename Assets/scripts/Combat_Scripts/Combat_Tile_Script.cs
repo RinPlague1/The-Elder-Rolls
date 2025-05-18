@@ -30,6 +30,7 @@ public class Combat_Tile_Script : MonoBehaviour
         {
             Obstacle = Obstacles.None;
         }
+
         else
         {
              New_Obstacle = UnityEngine.Random.Range(0.0f, 1.0f);

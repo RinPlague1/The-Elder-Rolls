@@ -8,7 +8,7 @@ public class Combat_Turn_Order : MonoBehaviour
     public List<GameObject> Turn_Order = new List<GameObject>();
 
 
-    public void Start()
+    public List<GameObject> Set_Turn_Order()
     {
         Scene Active_Scene = SceneManager.GetActiveScene();
         foreach (GameObject Entity in Active_Scene.GetRootGameObjects())
@@ -18,13 +18,16 @@ public class Combat_Turn_Order : MonoBehaviour
                 Turn_Order.Add(Entity);
             }
         }
+        return Turn_Order;
     }
+
+
     public GameObject Next_Turn(GameObject Current_Turn)
     {
         for (int i = 0; i < Turn_Order.Count; i++)
         {
             if (Current_Turn = Turn_Order[i])
-            { return Turn_Order[i + 1 % Turn_Order.Count]; }
+            { return Turn_Order[(i + 1) % Turn_Order.Count]; }
         }
         Debug.LogError("$ Next Turn Entity NOT Found");
         return null;
