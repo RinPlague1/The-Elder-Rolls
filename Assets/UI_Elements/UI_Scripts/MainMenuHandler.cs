@@ -14,6 +14,35 @@ public class MainMenuHandler : MonoBehaviour
     private void Start()
     {
         ActiveWindow = QuestMenu;
+        OpenQuestTab();
+    }
+
+    public void OpenQuestTab()
+    {
+        ActiveWindow.SetActive(false);
+        QuestMenu.SetActive(true);
+        ActiveWindow = QuestMenu;
+    }
+
+    public void OpenEquipmentTab()
+    {
+        ActiveWindow.SetActive(false);
+        EquipmentMenu.SetActive(true);
+        ActiveWindow = EquipmentMenu;
+    }
+
+    public void OpenInventoryTab()
+    {
+        ActiveWindow.SetActive(false);
+        InventoryMenu.SetActive(true);
+        ActiveWindow = InventoryMenu;
+    }
+
+    public void OpenStatusTab()
+    {
+        ActiveWindow.SetActive(false);
+        StatusMenu.SetActive(true);
+        ActiveWindow = StatusMenu;
     }
 
     public void OpenSettingsMenu()
