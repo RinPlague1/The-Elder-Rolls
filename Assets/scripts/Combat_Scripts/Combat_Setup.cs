@@ -32,6 +32,8 @@ public class Combat_Setup : MonoBehaviour
 
     MeshRenderer _MeshRenderer;
 
+    public Enemy_Script _Enemy_Script;
+
 
     void Set_Initial_Player_Position(Vector2Int Coords)
     {
@@ -53,6 +55,8 @@ public class Combat_Setup : MonoBehaviour
             Enemy_Script Enemy = Enemy_GO.GetComponent<Enemy_Script>();
             Enemies.Add(Enemy_GO);
         }
+
+        _Enemy_Script.Get_Enemies(Enemies);
     }
 
     // Start is called before the first frame update

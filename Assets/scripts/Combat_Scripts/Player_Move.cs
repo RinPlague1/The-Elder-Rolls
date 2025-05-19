@@ -13,11 +13,8 @@ using static UnityEngine.GraphicsBuffer;
 public class Player_Move : MonoBehaviour
 {
     public GameObject Player;
-    public GameObject Enemy;
 
     public GameObject Movement_Manager;
-
-    public Text Ui;
     private int Speed = 6;
 
     public Combat_Tile_Script Current_Tile;
@@ -28,90 +25,104 @@ public class Player_Move : MonoBehaviour
 //    public GameObject Movement_Container;
 
     public TextMeshProUGUI Movement_Remaining;
-
-    public GameObject Turn_Order_Container;
     public Combat_Turn_Order _Turn_Order;
     public GameObject Current_Turn;
 
+    public List<GameObject> Enemy_List;
+    public Enemy_Script _Current_Enemy;
+
+
+
+
+
     private void Start()
     {
-        _Turn_Order = Turn_Order_Container.GetComponent<Combat_Turn_Order>();
+        Current_Turn = Player;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        Ray Starting_Ray = new UnityEngine.Ray(Player.transform.position + Vector3.up, new Vector3(0, -5, 0));
-        if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
+        Debug.Log($"Movement Text:  {Movement_Remaining.text}");
+        Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
+        if (Current_Turn == Player)
         {
-            if (Hit_Start.collider.CompareTag("Combat_Tile"))
+            Ray Starting_Ray = new UnityEngine.Ray(Player.transform.position + Vector3.up, new Vector3(0, -5, 0));
+            if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
             {
-                Current_Tile = null;
-                int Current_X, Current_Y;
-                Current_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
-                //Debug.Log($"Current Tile Name: {Current_Tile}");
-
-                Current_X = Current_Tile.Coordinates.x;
-                // Debug.Log($"Current Tile coord X: {Current_X}");
-
-                Current_Y = Current_Tile.Coordinates.y;
-                //Debug.Log($"Current Tile coord Y: {Current_Y}");
-
-            }
-        }
-
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Button Pressed");
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f); // Draw a red ray
-
-            if (Physics.Raycast(ray, out RaycastHit Hit_Target))
-            {
-                if (Hit_Target.collider.CompareTag("Combat_Tile")) //&& hit.collider.CompareTag("Neighrbour"))
+                if (Hit_Start.collider.CompareTag("Combat_Tile"))
                 {
-                    Target_Tile = null;
-                    int Target_X, Target_Y;
-                    Target_Tile = Hit_Target.collider.GetComponent<Combat_Tile_Script>();
-                    Debug.Log($"TargetTile name: {Target_Tile}");
+                    Current_Tile = null;
+                    int Current_X, Current_Y;
+                    Current_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
+                    //Debug.Log($"Current Tile Name: {Current_Tile}");
 
-                    Target_X = Target_Tile.Coordinates.x;
+                    Current_X = Current_Tile.Coordinates.x;
+                    // Debug.Log($"Current Tile coord X: {Current_X}");
 
+                    Current_Y = Current_Tile.Coordinates.y;
+                    //Debug.Log($"Current Tile coord Y: {Current_Y}");
 
-                    Target_Y = Target_Tile.Coordinates.y;
-
-
-                    Vector2Int Target_Coord_Vec = Target_Tile.Coordinates;
-
-     
-                    bool Checker = true;
-                    if (Checker)
-                    {
-                        if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
-                        {
-
-                            StopAllCoroutines();
-                            StartCoroutine(Move_To_Tile(Target_Tile));
-                            Debug.Log($"Movement Text:  {Movement_Remaining.text}");
-                            Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
-                        }
-                        else
-                        { }
-                    }
-                    else
-                    { Debug.Log($"Tile is not free"); }
                 }
             }
+
+
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Button Pressed");
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f); // Draw a red ray
+
+                if (Physics.Raycast(ray, out RaycastHit Hit_Target))
+                {
+                    if (Hit_Target.collider.CompareTag("Combat_Tile")) //&& hit.collider.CompareTag("Neighrbour"))
+                    {
+                        Target_Tile = null;
+                        int Target_X, Target_Y;
+                        Target_Tile = Hit_Target.collider.GetComponent<Combat_Tile_Script>();
+                        Debug.Log($"TargetTile name: {Target_Tile}");
+
+                        Target_X = Target_Tile.Coordinates.x;
+
+
+                        Target_Y = Target_Tile.Coordinates.y;
+
+
+                        Vector2Int Target_Coord_Vec = Target_Tile.Coordinates;
+
+
+                        bool Checker = true;
+                        if (Checker)
+                        {
+                            if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+                            {
+
+                                StopAllCoroutines();
+                                StartCoroutine(Move_To_Tile(Target_Tile));
+                            }
+                            else
+                            { }
+                        }
+                        else
+                        { Debug.Log($"Tile is not free"); }
+                    }
+                }
+            }
+            if (Speed == 0)
+            {
+                Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                this.StopAllCoroutines();
+                Movement_Manager.SetActive(false);
+            }
+
         }
-        if (Speed == 0)
+        else
         {
-            Current_Turn = _Turn_Order.Next_Turn(Player);
-            this.StopAllCoroutines();
-            Movement_Manager.SetActive(false);
+            End_Turn();
         }
+
     }
 
     IEnumerator Move_To_Tile(Combat_Tile_Script Target_Tile)
@@ -147,6 +158,20 @@ public class Player_Move : MonoBehaviour
        
     }
 
-
+    private void End_Turn()
+    {
+        for (int i = 0; i < Enemy_List.Count; i++)
+        {
+            if (Enemy_List[i] == Current_Turn)
+            {
+                _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
+                _Current_Enemy.Enemy_Movement(Enemy_List[i]);
+                break;
+            }
+        }
+    Debug.Log($"Current Turn: {Current_Turn}");
+    Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+    Speed = 6;
+    }
 
 }

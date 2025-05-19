@@ -9,6 +9,7 @@ public class Enemy_Generation : MonoBehaviour
 
     public Combat_Tile_Script Enemy_Tile;
 
+
     private void Start()
     {
         Enemy_Tile = null;
@@ -20,8 +21,6 @@ public class Enemy_Generation : MonoBehaviour
 
         return enemyTransform;
     }
-
-
 
     public Vector2Int Get_Enemy_Location()
     {

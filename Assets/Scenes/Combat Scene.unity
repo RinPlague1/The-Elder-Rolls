@@ -672,6 +672,7 @@ MonoBehaviour:
   Turns: []
   Turn_Order: {fileID: 1013421622}
   Generate: {fileID: 1013421621}
+  _Enemy_Script: {fileID: 8948473695178127484, guid: 769b218632d56c44eb21c094d59bdfe8, type: 3}
 --- !u!114 &1013421621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,16 +1385,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1548519213}
-  Enemy: {fileID: 0}
   Movement_Manager: {fileID: 1562664289}
-  Ui: {fileID: 0}
   Current_Tile: {fileID: 0}
   Target_Tile: {fileID: 0}
   Player_Camera: {fileID: 2101530195}
   Movement_Remaining: {fileID: 1700111471}
-  Turn_Order_Container: {fileID: 1013421615}
-  _Turn_Order: {fileID: 0}
+  _Turn_Order: {fileID: 1013421622}
   Current_Turn: {fileID: 0}
+  Enemy_List: []
+  _Current_Enemy: {fileID: 0}
 --- !u!4 &1562664291
 Transform:
   m_ObjectHideFlags: 0
