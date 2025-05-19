@@ -30,7 +30,7 @@ public class MenuDisplay : MonoBehaviour
 
     void ToggleMenu()
     {
-        bool updateMenu = (MenuEnabled == true) ? true : false;
+        bool updateMenu = (MenuEnabled == true);
         MainMenu.SetActive(updateMenu);
     }
 
