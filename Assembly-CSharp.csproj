@@ -75,6 +75,7 @@
     <Compile Include="Assets\scripts\Combat_Scripts\Player_Turn.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\MainMenuHandler.cs" />
     <Compile Include="Assets\scripts\overworld\HexGridGenrator.cs" />
+    <Compile Include="Assets\scripts\Combat_Scripts\Combat_Over.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\MenuDisplay.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Player_Move.cs" />
     <Compile Include="Assets\scripts\Menu_Scripts\characterCreator.cs" />

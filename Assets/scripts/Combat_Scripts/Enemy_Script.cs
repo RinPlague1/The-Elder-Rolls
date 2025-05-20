@@ -12,10 +12,10 @@ public class Enemy_Script : MonoBehaviour
     public Player_Move _Move;
     public GameObject _Player;
     public Combat_Turn_Order _Turn_Order;
-    public int _Speed = 6;
+    public int _Speed;
     List<GameObject> Enemies;
-    public playerAttributes _Player_Attributes;
-
+    private playerAttributes _Player_Attributes;
+    private int _Health;
 
     public A_Star_Pathfinding _Pathfinding;
     public  List<Combat_Tile_Script> _Path;
@@ -41,6 +41,7 @@ public class Enemy_Script : MonoBehaviour
 
     public void Enemy_Movement(GameObject _Enemy, GameObject Container, GameObject Move)
     {
+        _Speed = 6;
         _Container = Container;
         _Move = Move.GetComponentInChildren<Player_Move>();
         _Pathfinding = Move.GetComponentInChildren<A_Star_Pathfinding>();
@@ -60,6 +61,9 @@ public class Enemy_Script : MonoBehaviour
             if (Hit_Start.collider.CompareTag("Combat_Tile"))
             {
                 Enemy_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
+                Debug.Log($"Working One: {Enemy_Tile}");
+                Debug.Log($"Working One: {Player_Tile}");
+                Debug.Log($"Working One: {Container}");
                 _Pathfinding.Setup(Enemy_Tile, Player_Tile, Container);
                 _Path = _Pathfinding.Find_Path(Enemy_Tile.Coordinates.x, Enemy_Tile.Coordinates.y, Get_Player_Tile().Coordinates.x, Get_Player_Tile().Coordinates.y);
                 if (_Path != null)
@@ -73,13 +77,30 @@ public class Enemy_Script : MonoBehaviour
                         StopAllCoroutines();
                         StartCoroutine(Enemy_Move_To_Tile(_Path[i - 1], _Path[i]));
                         Delay_Action(1f);
-                        if (i == _Speed) { break; }
+                        _Speed--;
+                        if (0 == _Speed) 
+                        { break; }
                     }
                 }
                 else
                 {
                     Debug.Log($"Broken One");
                 }
+            }
+        }
+
+
+        List<Combat_Tile_Script> Is_Player = _Pathfinding.Get_Adjacent(_Path[_Path.Count - 1]);
+
+        for (int i = 0; i < Is_Player.Count; i++)
+        {
+            if (Is_Player[i] == Player_Tile) 
+            {
+                _Move.Set_Health(_Move.Get_Health() - 60);
+                //if (_Player_Attributes.TakeDamage(_Player_Attributes.maxHealth))
+                //{
+                //    break;
+                //}
             }
         }
     }

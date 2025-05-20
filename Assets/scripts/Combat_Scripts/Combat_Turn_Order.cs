@@ -43,7 +43,7 @@ public class Combat_Turn_Order : MonoBehaviour
     {
         for (int i = 0; i < Turn_Order.Count; i++)
         {
-            if (Current_Turn = Turn_Order[i])
+            if (Current_Turn == Turn_Order[i])
             { return Turn_Order[(i + 1) % Turn_Order.Count]; }
         }
         Debug.LogError("$ Next Turn Entity NOT Found");

@@ -77,7 +77,7 @@ public class A_Star_Pathfinding :MonoBehaviour
             if (Current_Node.Coordinates == _End_Tile.Coordinates)
             {
                 //Reached End Node
-                return Calculate_Path(_End_Tile);
+                return Calculate_Path(_End_Tile.Previous_Node);
             }
             else
             {
@@ -119,7 +119,7 @@ public class A_Star_Pathfinding :MonoBehaviour
         return null;
     }
 
-    private List<Combat_Tile_Script> Get_Adjacent(Combat_Tile_Script Current)
+    public List<Combat_Tile_Script> Get_Adjacent(Combat_Tile_Script Current)
     {
         List<Combat_Tile_Script> Neighbour_List = new List<Combat_Tile_Script>();
 

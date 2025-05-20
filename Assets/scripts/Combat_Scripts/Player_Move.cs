@@ -31,9 +31,9 @@ public class Player_Move : MonoBehaviour
     public List<GameObject> Enemy_List;
     public Enemy_Script _Current_Enemy;
 
+    public playerAttributes _Current_Player_Attributes = new playerAttributes();
 
-
-
+    public int _Health = 120;
 
     private void Start()
     {
@@ -49,7 +49,17 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Set_Enemies();
+        if (_Health <= 0)
+        {
+            Combat_Over.Instance.Show_Encounter(true);
+        }
+        if (Enemy_List.Count == 0)
+        {
+            Combat_Over.Instance.Show_Encounter(false);
+        }
+
          Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
         if (Current_Turn == Player)
         {
@@ -120,13 +130,27 @@ public class Player_Move : MonoBehaviour
         }
         else
         {
+            Ray Starting_Ray = new UnityEngine.Ray(Player.transform.position + Vector3.up, new Vector3(0, -5, 0));
+            if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
+            {
+                if (Hit_Start.collider.CompareTag("Combat_Tile"))
+                {
+                    Current_Tile = null;
+                    int Current_X, Current_Y;
+                    Current_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
+                    Current_X = Current_Tile.Coordinates.x;
+                    Current_Y = Current_Tile.Coordinates.y;
+
+                }
+            }
+
             while (Current_Turn != Player)
-            { 
+            {
                 End_Turn();
                 Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
             }
-            
             Debug.Log($"Movement Diactivated");
+            Speed = 6;
             Movement_Manager.SetActive(false);
         }
 
@@ -142,6 +166,16 @@ public class Player_Move : MonoBehaviour
         End_Pos.y = Start_Pos.y; // Maintain player's height
         Player.transform.position = End_Pos; // Moves Player's Position
 
+
+        End_Pos.y = Player_Camera.transform.position.y; // Maintains camera height
+        Player_Camera.transform.position = End_Pos; // Moves Camera with player
+        yield return null;
+    }
+
+    IEnumerator Move_Camera(Combat_Tile_Script Target_Tile)
+    {
+        Vector3 Start_Pos = Current_Tile.transform.position;
+        Vector3 End_Pos = Target_Tile.transform.position;
 
         End_Pos.y = Player_Camera.transform.position.y; // Maintains camera height
         Player_Camera.transform.position = End_Pos; // Moves Camera with player
@@ -178,7 +212,6 @@ public class Player_Move : MonoBehaviour
             }
         }
         Debug.Log($"Current Turn: {Current_Turn}");
-        Speed = 6;
     }
 
     public GameObject Get_Player()
@@ -196,4 +229,18 @@ public class Player_Move : MonoBehaviour
         return Player_Camera;
     }
 
+    public int Get_Health()
+    {
+        return _Health;
+    }
+    public void Set_Health(int Health)
+    {
+       _Health = Health;
+    }
+
+
+    public playerAttributes Get_Player_Attributes()
+    {
+        return _Current_Player_Attributes;
+    }
 }
