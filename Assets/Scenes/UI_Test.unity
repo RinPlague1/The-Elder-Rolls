@@ -384,10 +384,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2764216156387835838, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2906268701907431785, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
       propertyPath: m_Name
       value: UserInterface
