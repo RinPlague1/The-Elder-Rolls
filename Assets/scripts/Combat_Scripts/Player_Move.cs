@@ -40,14 +40,20 @@ public class Player_Move : MonoBehaviour
         Current_Turn = Player;
     }
 
+    private void Set_Enemies()
+    {
+        Enemy_List =  _Turn_Order.Get_Enemies();
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"Movement Text:  {Movement_Remaining.text}");
-        Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
+        Set_Enemies();
+         Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
         if (Current_Turn == Player)
         {
+
             Ray Starting_Ray = new UnityEngine.Ray(Player.transform.position + Vector3.up, new Vector3(0, -5, 0));
             if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
             {
@@ -56,13 +62,8 @@ public class Player_Move : MonoBehaviour
                     Current_Tile = null;
                     int Current_X, Current_Y;
                     Current_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
-                    //Debug.Log($"Current Tile Name: {Current_Tile}");
-
                     Current_X = Current_Tile.Coordinates.x;
-                    // Debug.Log($"Current Tile coord X: {Current_X}");
-
                     Current_Y = Current_Tile.Coordinates.y;
-                    //Debug.Log($"Current Tile coord Y: {Current_Y}");
 
                 }
             }
@@ -113,14 +114,20 @@ public class Player_Move : MonoBehaviour
             if (Speed == 0)
             {
                 Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
-                this.StopAllCoroutines();
-                Movement_Manager.SetActive(false);
+                Debug.Log($"End Player Turn");
             }
 
         }
         else
         {
-            End_Turn();
+            while (Current_Turn != Player)
+            { 
+                End_Turn();
+                Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+            }
+            
+            Debug.Log($"Movement Diactivated");
+            Movement_Manager.SetActive(false);
         }
 
     }
@@ -160,18 +167,33 @@ public class Player_Move : MonoBehaviour
 
     private void End_Turn()
     {
+        
         for (int i = 0; i < Enemy_List.Count; i++)
         {
             if (Enemy_List[i] == Current_Turn)
             {
                 _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
-                _Current_Enemy.Enemy_Movement(Enemy_List[i]);
+                _Current_Enemy.Enemy_Movement(Enemy_List[i], _Turn_Order.gameObject, this.gameObject);
                 break;
             }
         }
-    Debug.Log($"Current Turn: {Current_Turn}");
-    Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
-    Speed = 6;
+        Debug.Log($"Current Turn: {Current_Turn}");
+        Speed = 6;
+    }
+
+    public GameObject Get_Player()
+    {
+        return Player;
+    }
+
+    public Combat_Tile_Script Get_Player_Tile()
+    {
+        return Current_Tile;
+    }
+
+    public Camera Get_Camera()
+    {
+        return Player_Camera;
     }
 
 }

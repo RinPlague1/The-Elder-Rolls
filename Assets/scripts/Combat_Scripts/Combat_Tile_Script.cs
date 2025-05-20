@@ -4,6 +4,14 @@ using UnityEngine;
 using static Combat_Setup;
 public class Combat_Tile_Script : MonoBehaviour
 {
+
+    public Combat_Tile_Script Previous_Node;
+
+    public int G_Cost;
+    public int H_Cost;
+    public int F_Cost;
+
+
     public Vector2Int Coordinates;
 
     public Obstacles Obstacle;
@@ -16,7 +24,11 @@ public class Combat_Tile_Script : MonoBehaviour
         Set_Obstacles(Random_Val);
 
         Coordinates = Coords;
-      
+
+        G_Cost = int.MaxValue;
+        Calculate_F_Cost();
+        Previous_Node = null;
+
     }
 
     public void Set_Neighbours(List<Combat_Tile_Script> Neighrbour_Tiles)
@@ -74,5 +86,20 @@ public class Combat_Tile_Script : MonoBehaviour
         };
         GetComponent<Renderer>().material.color = Tile_Colour;
     }
+
+
+
+    public void Calculate_F_Cost()
+    {
+        F_Cost = G_Cost + H_Cost;
+    }
+
+    //public override string ToString()
+    //{
+    //    return Coordinates.x + "," + Coordinates.y;
+    //}
+
+
+
 
 }

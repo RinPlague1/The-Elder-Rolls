@@ -8,6 +8,10 @@ public class Combat_Setup : MonoBehaviour
 {
     public GameObject Combat_Tile_Prefab;
     public GameObject Enemy_Prefab;
+
+    public List<Combat_Tile_Script> Tiles = new List<Combat_Tile_Script>();
+
+
     [Header("Combat Map Size")]
     public int Width;
     public int Height;
@@ -97,11 +101,13 @@ public class Combat_Setup : MonoBehaviour
                 _MeshRenderer = TileGO.GetComponentInChildren<       MeshRenderer>();
                 _MeshRenderer.enabled = false;
                 _MeshRenderer.enabled = true;
+                Tiles.Add(Combat_Tile);
             }
             foreach (var Tile in Combat_Tiles.Values)
             {
                 Tile.Set_Neighbours(Get_Neighbours(Tile.Coordinates));
             }
+
         }
 
     }
@@ -140,5 +146,12 @@ public class Combat_Setup : MonoBehaviour
             _MeshRenderer.enabled = !_MeshRenderer.isVisible;
         }
     }
+
+    public List<Combat_Tile_Script> Get_Tiles()
+    {
+        return Tiles;
+    }
+
+
 }
 
