@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         if (movesText != null)
         {
-            movesText.text = $"{currentMoves}/{maxMoves}";
+            movesText.text = $"Moves: {currentMoves}/{maxMoves}";
         }
     }
 
