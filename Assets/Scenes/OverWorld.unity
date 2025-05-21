@@ -1928,6 +1928,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 706749264221184129, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+      propertyPath: m_text
+      value: nothing happened
+      objectReference: {fileID: 0}
+    - target: {fileID: 706749264221184129, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+      propertyPath: m_fontSize
+      value: 60.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 706749264221184129, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+      propertyPath: m_margin.x
+      value: 61.78784
+      objectReference: {fileID: 0}
+    - target: {fileID: 706749264221184129, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+      propertyPath: m_margin.y
+      value: 16.098083
+      objectReference: {fileID: 0}
+    - target: {fileID: 706749264221184129, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+      propertyPath: m_margin.z
+      value: 66.38452
+      objectReference: {fileID: 0}
     - target: {fileID: 2906268701907431785, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
       propertyPath: m_Name
       value: OverworldUI
