@@ -6,8 +6,53 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[System.Serializable]
+public enum Enemy_Type
+{
+    Melee,
+    Ranged,
+    Boss
+}
+
+[System.Serializable]
+public enum Enemy_Attunement
+{
+    None,
+    Galactic,
+    Eldritch,
+    Necrotic
+}
+
 public class Enemy_Script : MonoBehaviour
 {
+    [Header("Basic Info")]
+    public Enemy_Type Enemy_Class = Enemy_Type.Melee;
+
+
+    [Header("Vital Stats")]
+    public int Max_Health = 10;
+    public int Current_Health;
+    public int Max_Mana = 20;
+    public int Current_Mana;
+    public int Experience = 5;
+
+    [Header("Magic System")]
+    public Enemy_Attunement Primary = Enemy_Attunement.None;
+    public Enemy_Attunement Secondary = Enemy_Attunement.None;
+    public Dictionary<Enemy_Attunement, int> Attunement_Levels = new Dictionary<Enemy_Attunement, int>();
+
+    [Header("Inventory")]
+    public List<Item> Inventory = new List<Item>();
+    public int Gold = 10;
+    public int Capacity = 20;
+
+    [Header("Visuals")]
+    public Color Galactic_Color = Color.cyan;
+    public Color Eldritch_Color = Color.magenta;
+    public Color Necrotic_Color = Color.green;
+
+
+
     public Combat_Setup _Setup;
     public Player_Move _Move;
     public GameObject _Player;
@@ -134,5 +179,92 @@ public class Enemy_Script : MonoBehaviour
         yield return null;
     }
 
+
+
+
+    private void Awake()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        foreach (Enemy_Attunement Attunement in System.Enum.GetValues(typeof(Enemy_Attunement)))
+        {
+            Attunement_Levels[Attunement] = (Attunement == Enemy_Attunement.None) ? 0 : 1;
+        }
+
+        switch (Enemy_Class)
+        {
+            case Enemy_Type.Melee:
+                Max_Health = 30;
+                Max_Mana = 10;
+                break;
+            case Enemy_Type.Ranged:
+                Max_Health = 10;
+                Max_Mana = 30;
+                break;
+
+            case Enemy_Type.Boss:
+                Max_Health = 200;
+                Max_Mana = 200;
+                break;
+
+        }
+        Current_Health = Max_Health;
+        Current_Mana = Max_Mana;
+    }
+
+    public bool Take_Damage(int _Amount)
+    {
+        Current_Health -= _Amount;
+        if (Current_Health <= 0)
+        {
+            Current_Health = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public void Heal(int _Amount) { Mathf.Min(Current_Health + _Amount, Max_Health); }
+
+    public bool Use_Mana(int _Amount)
+    {
+        if (Current_Mana >= _Amount)
+        {
+            Current_Mana -= _Amount;
+            return true;
+        }
+        return false;
+    }
+
+    public void Restore_Mana(int _Amount) { Mathf.Min(Current_Mana + _Amount, Max_Mana); }
+
+    public Color Get_Attunement_Color(Enemy_Attunement _Attunement)
+    {
+        return _Attunement switch
+        {
+            Enemy_Attunement.Galactic => Galactic_Color,
+            Enemy_Attunement.Necrotic => Necrotic_Color,
+            Enemy_Attunement.Eldritch => Eldritch_Color,
+            _ => Color.white
+        };
+    }
+
+    public float Get_Attunement_Power(Enemy_Attunement _Attunemnt)
+    {
+        return Attunement_Levels.ContainsKey(_Attunemnt) ? Attunement_Levels[_Attunemnt] / 10f : 0f;
+    }
+
+
+    [System.Serializable]
+    public class Item
+    {
+        public string Item_Name;
+        public string Description;
+        public Sprite Icon;
+        public int Value;
+        public bool Consumable;
+    }
 
 }

@@ -3804,7 +3804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1562664290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3826,9 +3826,17 @@ MonoBehaviour:
   _Turn_Order: {fileID: 1013421622}
   Current_Turn: {fileID: 0}
   Enemy_List: []
+  Enemy_Target: {fileID: 0}
   _Current_Enemy: {fileID: 0}
   _Current_Player_Attributes: {fileID: 0}
   _Health: 120
+  _Range: 1
+  Damage: 15
+  Gold_Gained: 0
+  XP_Gained: 0
+  _Move_Button: {fileID: 1057993557}
+  _Attack_Button: {fileID: 109939062}
+  _Defend_Button: {fileID: 1556428726}
 --- !u!4 &1562664291
 Transform:
   m_ObjectHideFlags: 0

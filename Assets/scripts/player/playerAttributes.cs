@@ -33,6 +33,8 @@ public class playerAttributes : MonoBehaviour
     public int currentHealth;
     public int maxMana = 50;
     public int currentMana;
+    public int Experinece;
+    public int Level;
 
     [Header("Magic System")]
     public MagicAttunement primaryAttunement = MagicAttunement.None;
@@ -165,6 +167,17 @@ public class playerAttributes : MonoBehaviour
     {
         return attunementLevels.ContainsKey(attunement) ? attunementLevels[attunement] / 10f : 0f;
     }
+
+    public bool Level_Up(int Needed)
+    {
+        if (Experinece >= Needed)
+        {
+            Experinece -= Needed;
+            return true;
+        }
+        return false;
+    }    
+
 }
 
 [System.Serializable]
