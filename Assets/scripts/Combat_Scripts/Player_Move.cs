@@ -60,7 +60,7 @@ public class Player_Move : MonoBehaviour
             Combat_Over.Instance.Show_Encounter(false);
         }
 
-         Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
+         Movement_Remaining.text = "Moves: " + Speed.ToSafeString();
         if (Current_Turn == Player)
         {
 
