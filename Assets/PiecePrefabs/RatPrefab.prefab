@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 821365687561040320}
+  - component: {fileID: 5750347797106446483}
   m_Layer: 0
   m_Name: RatPrefab
   m_TagString: Untagged
@@ -33,6 +34,27 @@ Transform:
   - {fileID: 523156715798526901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5750347797106446483
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6676474213254242908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.95252055, z: 1}
+  m_Center: {x: 0, y: 0.4330813, z: 0}
 --- !u!1001 &7770386473169314624
 PrefabInstance:
   m_ObjectHideFlags: 0

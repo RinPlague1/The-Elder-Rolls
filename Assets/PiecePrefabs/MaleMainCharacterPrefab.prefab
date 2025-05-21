@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1834487603008426094}
+  - component: {fileID: 3588646762296236791}
+  - component: {fileID: 3819038476249035721}
   m_Layer: 0
   m_Name: MaleMainCharacterPrefab
   m_TagString: Untagged
@@ -33,6 +35,45 @@ Transform:
   - {fileID: 4108588665811841822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3588646762296236791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431636395602846037}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.8715355, z: 1}
+  m_Center: {x: 0, y: 0.82123005, z: 0}
+--- !u!114 &3819038476249035721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431636395602846037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d095809c845a7a44fbd8384bab6d8556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoves: 5
+  currentMoves: 0
+  movesText: {fileID: 0}
+  moveSpeed: 1
+  currentTile: {fileID: 0}
+  targetTile: {fileID: 0}
 --- !u!1001 &204235225692006754
 PrefabInstance:
   m_ObjectHideFlags: 0
