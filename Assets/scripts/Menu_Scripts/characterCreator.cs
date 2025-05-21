@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,10 +7,10 @@ public class CharacterCreator : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_InputField nameInput;
-    public Dropdown classDropdown;
+    public TMP_Dropdown classDropdown;
     public Image characterPreview;
-    public Slider attunementSlider;
-    public TextMeshProUGUI attunementDescription;
+    public TMP_Dropdown attunementSlider;
+    //public TextMeshProUGUI attunementDescription;
     public Button confirmButton;
 
     [Header("Visual Options")]
@@ -22,7 +21,8 @@ public class CharacterCreator : MonoBehaviour
 
     [Header("Player Prefab")]
     public GameObject playerPrefab;
-    public Transform spawnPoint;
+    
+ 
 
     private PlayerClass selectedClass;
     private MagicAttunement primaryAttunement = MagicAttunement.None;
@@ -30,8 +30,38 @@ public class CharacterCreator : MonoBehaviour
     private int hairStyleIndex = 0;
     private int hairColorIndex = 0;
 
+
+    [Header("Default Names")]
+    public string[] warriorNames = { "Garrick", "Thrain", "Brynn", "Eldric" };
+    public string[] mageNames = { "Elyndra", "Veylin", "Syndra", "Mordecai" };
+    public string[] rogueNames = { "Rook", "Vex", "Lyssandra", "Talon" };
+    public string[] clericNames = { "Theodora", "Alistair", "Meridia", "Percival" };
+    public string[] rangerNames = { "Arianna", "Kael", "Rowan", "Sylvana" };
+
+
+    [Header("Party Management")]
+    public GameManager.PlayerSlot assignedSlot;
+    public bool addToPartyImmediately = true;
+
+    public class CharacterCreationData
+    {
+        public string characterName;
+        public PlayerClass playerClass;
+        public MagicAttunement primaryAttunement;
+        public int skinColorIndex;
+        public int hairStyleIndex;
+        public int hairColorIndex;
+        public GameManager.PlayerSlot assignedSlot;
+    }
+
+    private CharacterCreationData currentCreationData;
+
+
+
     private void Start()
     {
+        currentCreationData = new CharacterCreationData();
+
         // Initialize class dropdown
         classDropdown.ClearOptions();
         List<string> classNames = new List<string>();
@@ -48,69 +78,117 @@ public class CharacterCreator : MonoBehaviour
 
         // Initial setup
         OnClassChanged(0);
-        UpdateCharacterPreview();
+        //UpdateCharacterPreview();
     }
 
     private void OnClassChanged(int index)
     {
-        selectedClass = (PlayerClass)index;
-        UpdateCharacterPreview();
-        UpdateAttunementOptions();
-    }
+        Debug.Log(index);
 
-    private void UpdateAttunementOptions()
-    {
-        // Different classes have different attunement availability
-        switch (selectedClass)
+        switch(index)
         {
-            case PlayerClass.Mage:
-                attunementSlider.maxValue = 2;
+            case 0:
+                selectedClass = PlayerClass.Warrior;
+               
                 break;
-            case PlayerClass.Cleric:
-                attunementSlider.maxValue = 2;
+
+            case 1:
+                selectedClass = PlayerClass.Mage;
+                
                 break;
-            default:
-                attunementSlider.maxValue = 1;
+
+            case 2:
+                selectedClass = PlayerClass.Rogue;
+                
+                break;
+
+            case 3:
+                selectedClass = PlayerClass.Cleric;
+                
+                break;
+
+            case 4:
+               selectedClass = PlayerClass.Ranger;
+                
                 break;
         }
+
+        //UpdateCharacterPreview();
+
     }
 
-    private void OnAttunementChanged(float value)
+    private string GetRandomName(string[] nameList)
     {
-        int attunementIndex = Mathf.FloorToInt(value);
-        primaryAttunement = (MagicAttunement)(attunementIndex + 1); // Skip "None"
+        if (nameList == null || nameList.Length == 0)
+            return "Adventurer";
 
-        attunementDescription.text = primaryAttunement switch
+        return nameList[Random.Range(0, nameList.Length)];
+    }
+
+    private void OnAttunementChanged(int value)
+    {
+        
+
+        Debug.Log($"Attunement: {value}");
+        primaryAttunement = (MagicAttunement)value;
+
+        switch(value)
         {
-            MagicAttunement.Galactic => "Galactic: Space and time magic",
-            MagicAttunement.Eldritch => "Eldritch: Forbidden knowledge",
-            MagicAttunement.Necrotic => "Necrotic: Life and death powers",
-            _ => "No magical attunement"
-        };
+            case 0:
+                primaryAttunement = MagicAttunement.None;
+                break;
 
-        UpdateCharacterPreview();
+            case 1:
+                primaryAttunement = MagicAttunement.Galactic;
+                break;
+
+            case 2:
+                primaryAttunement = MagicAttunement.Eldritch;
+                break;
+
+            case 3:
+                primaryAttunement = MagicAttunement.Necrotic;
+                break;
+        }
+
+        //attunementDescription.text = primaryAttunement switch
+        //{
+        //    MagicAttunement.Galactic => "Galactic: Space and time magic",
+        //    MagicAttunement.Eldritch => "Eldritch: Forbidden knowledge",
+        //    MagicAttunement.Necrotic => "Necrotic: Life and death powers",
+        //    _ => "No magical attunement"
+        //};
+
+        //UpdateCharacterPreview();
     }
 
     public void CycleSkinColor()
     {
         skinColorIndex = (skinColorIndex + 1) % skinColors.Length;
-        UpdateCharacterPreview();
+        //UpdateCharacterPreview();
     }
 
     public void CycleHairStyle()
     {
         hairStyleIndex = (hairStyleIndex + 1) % hairStyles.Length;
-        UpdateCharacterPreview();
+        //UpdateCharacterPreview();
     }
 
     public void CycleHairColor()
     {
         hairColorIndex = (hairColorIndex + 1) % hairColors.Length;
-        UpdateCharacterPreview();
+        //UpdateCharacterPreview();
     }
 
     private void UpdateCharacterPreview()
     {
+        // Add safety check
+        if (classSprites == null || classSprites.Count <= (int)selectedClass)
+        {
+            Debug.LogError("Missing class sprites or incorrect count!");
+            return;
+        }
+        
         // Update class image
         characterPreview.sprite = classSprites[(int)selectedClass];
 
@@ -134,26 +212,88 @@ public class CharacterCreator : MonoBehaviour
         if (string.IsNullOrWhiteSpace(nameInput.text))
         {
             Debug.LogWarning("Please enter a name for your character");
-            return;
+            
+            if (selectedClass == PlayerClass.Warrior)
+            {
+                nameInput.text = GetRandomName(warriorNames);
+            }
+
+            if (selectedClass == PlayerClass.Cleric)
+            {
+                nameInput.text = GetRandomName(clericNames);
+            }
+
+            if (selectedClass == PlayerClass.Rogue)
+            {
+                nameInput.text = GetRandomName(rogueNames);
+            }
+
+            if (selectedClass == PlayerClass.Mage)
+            {
+                nameInput.text = GetRandomName(mageNames);
+            }
+
+            if (selectedClass == PlayerClass.Ranger)
+            {
+                nameInput.text = GetRandomName(rangerNames);
+            }
+
+
+        }
+        else
+        {
+            currentCreationData.characterName = nameInput.text;
         }
 
-        GameObject newPlayer = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-        playerAttributes attributes = newPlayer.GetComponent<playerAttributes>();
+        if (GameManager.Instance.IsSlotOccupied(assignedSlot))
+        {
+            Debug.LogWarning($"Slot {assignedSlot} is already occupied!");
+            return;
+        }
+        GameObject playerPrefabToUse = playerPrefab; // Try Inspector reference first
 
-        // Set basic attributes
-        attributes.playerName = nameInput.text;
-        attributes.playerClass = selectedClass;
-        attributes.primaryAttunement = primaryAttunement;
+        //if (playerPrefabToUse == null)
+        //{
+        //    // Fallback to Resources load if Inspector reference is null
+        //    playerPrefabToUse = Resources.Load<GameObject>("PlayerPrefab");
 
-        // Initialize with selected options
-        attributes.InitializeAttributes();
+        //    if (playerPrefabToUse == null)
+        //    {
+        //        Debug.LogError("Player prefab not found! Please either: " +
+        //                     "\n1. Assign the prefab in the CharacterCreator Inspector" +
+        //                     "\n2. Or place a 'PlayerPrefab.prefab' in a Resources folder");
+        //        return;
+        //    }
+        //}
 
-        // Disable creator and enable game
-        gameObject.SetActive(false);
+        // Now safely instantiate
+      
 
-        // Here you would typically enable your game controller
-        // FindObjectOfType<GameManager>().StartGame(newPlayer);
+        // Store creation data
+        currentCreationData = new CharacterCreationData()
+        {
+            characterName = nameInput.text,
+            playerClass = selectedClass,
+            primaryAttunement = primaryAttunement,
+            skinColorIndex = skinColorIndex,
+            hairStyleIndex = hairStyleIndex,
+            hairColorIndex = hairColorIndex,
+            assignedSlot = assignedSlot
+        };
 
-        Debug.Log($"Character created: {attributes.playerName} the {attributes.playerClass}");
+        // Add to GameManager
+        GameManager.Instance.SetCharacterCreationData(currentCreationData);
+
+        // Create the character immediately (or you can wait until overworld loads)
+        //GameManager.Instance.CreatePlayerInOverworld();
+
+      
+        Debug.Log($"Character created: {currentCreationData.characterName} the {currentCreationData.playerClass}");
     }
+
+    public void SetCharacterSlot(int slotIndex)
+    {
+        assignedSlot = (GameManager.PlayerSlot)slotIndex;
+    }
+
 }
