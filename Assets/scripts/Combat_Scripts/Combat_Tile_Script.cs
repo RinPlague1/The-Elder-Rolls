@@ -38,34 +38,35 @@ public class Combat_Tile_Script : MonoBehaviour
 
     public void Set_Obstacles(float New_Obstacle)
     {
-        if (New_Obstacle <= 0.8)
+        if (New_Obstacle <= 0.95)
         {
             Obstacle = Obstacles.None;
         }
 
         else
         {
-             New_Obstacle = UnityEngine.Random.Range(0.0f, 1.0f);
-            if (New_Obstacle <= 0.2f)
-            {
-                Obstacle = Obstacles.Log;
-            }
-            else if (New_Obstacle > 0.2f && New_Obstacle <= 0.4f)
-            {
-                Obstacle = Obstacles.Wall;
-            }
-            else if (New_Obstacle > 0.4f && New_Obstacle <= 0.6f)
-            {
-                Obstacle = Obstacles.Fence;
-            }
-            else if (New_Obstacle > 0.6f && New_Obstacle <= 0.8f)
-            {
-                Obstacle = Obstacles.River;
-            }
-            else
-            {
-                Obstacle = Obstacles.Bridge;
-            }
+            Obstacle = Obstacles.Log;
+            // New_Obstacle = UnityEngine.Random.Range(0.0f, 1.0f);
+            //if (New_Obstacle <= 0.2f)
+            //{
+            //    Obstacle = Obstacles.Log;
+            //}
+            //else if (New_Obstacle > 0.2f && New_Obstacle <= 0.4f)
+            //{
+            //    Obstacle = Obstacles.Wall;
+            //}
+            //else if (New_Obstacle > 0.4f && New_Obstacle <= 0.6f)
+            //{
+            //    Obstacle = Obstacles.Fence;
+            //}
+            //else if (New_Obstacle > 0.6f && New_Obstacle <= 0.8f)
+            //{
+            //    Obstacle = Obstacles.River;
+            //}
+            //else
+            //{
+            //    Obstacle = Obstacles.Bridge;
+            //}
         }
         Update_Tile_Appearance();
     }
@@ -93,13 +94,4 @@ public class Combat_Tile_Script : MonoBehaviour
     {
         F_Cost = G_Cost + H_Cost;
     }
-
-    //public override string ToString()
-    //{
-    //    return Coordinates.x + "," + Coordinates.y;
-    //}
-
-
-
-
 }

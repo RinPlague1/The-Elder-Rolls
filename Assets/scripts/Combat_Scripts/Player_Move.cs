@@ -36,15 +36,15 @@ public class Player_Move : MonoBehaviour
     public playerAttributes _Current_Player_Attributes = new playerAttributes();
 
     public int _Health = 12000;
-    public int _Range = 1;
+    public int _Range = 5;
     public int Damage = 15;
-
+    public bool Defending = false;
 
     public int Gold_Gained = 0;
     public int XP_Gained = 0;
 
     public Button _Move_Button, _Attack_Button, _Defend_Button;
-     
+
 
     private void Start()
     {
@@ -63,6 +63,12 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //StartCoroutine(Move_Camera()
+
+        if (_Current_Player_Attributes == null)
+        {
+            _Current_Player_Attributes = Get_Player_Attributes();
+        }
         Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
         //StartCoroutine(Move_Camera()
 
@@ -107,6 +113,7 @@ public class Player_Move : MonoBehaviour
             }
             Debug.Log($"Movement Diactivated");
             Speed = 6;
+            Defending = false;
         }
     }
 
@@ -122,7 +129,7 @@ public class Player_Move : MonoBehaviour
             //{
             //    Combat_Over.Instance.Show_Encounter(true);
             //}
-           
+
 
             Current_Tile = Find_Tile(Player);
 
@@ -165,7 +172,7 @@ public class Player_Move : MonoBehaviour
         Player.transform.position = End_Pos; // Moves Player's Position
 
 
-        StartCoroutine(Move_Camera( Target_Tile ));
+        StartCoroutine(Move_Camera(Target_Tile));
         yield return null;
     }
 
@@ -192,31 +199,62 @@ public class Player_Move : MonoBehaviour
 
     public void Attack()
     {
+        A_Star_Pathfinding _Check_Path = this.gameObject.GetComponentInChildren<A_Star_Pathfinding>();
+        List<Combat_Tile_Script> _Projectile_Path = new List<Combat_Tile_Script>();
+
         if (Enemy_List.Count == 0)
         { Set_Enemies(); }
         if (Enemy_Target != null)
         {
             if (Current_Tile == null) { Current_Tile = Find_Tile(Player); }
             Target_Tile = Find_Tile(Enemy_Target);
-            if (Vector3.Distance(Current_Tile.transform.position, Target_Tile.transform.position) <= _Range)
-            {                
-                for (int i = 0; i < Enemy_List.Count; i++)
-                {
-                    if (Enemy_Target == Enemy_List[i])
-                    {
-                        Enemy_Script _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
+            float _Distance = Vector3.Distance(Current_Tile.transform.position, Target_Tile.transform.position);
+            Debug.Log($"Current Tile: {Current_Tile.Coordinates}");
+            Debug.Log($"Current Tile: {Target_Tile.Coordinates}");
+            _Check_Path.Setup(Current_Tile, Target_Tile, _Turn_Order.gameObject);
+            _Projectile_Path = _Check_Path.Find_Path(Current_Tile.Coordinates.x, Current_Tile.Coordinates.y,
+            Target_Tile.Coordinates.x, Target_Tile.Coordinates.y);
 
-                        if (_Current_Enemy.Take_Damage(Damage))
+            if (_Projectile_Path != null)
+            {
+                if (_Projectile_Path.Count <= _Range)
+                {
+                    if (_Projectile_Path.Count <= _Distance)
+                    {
+                        for (int i = 0; i < Enemy_List.Count; i++)
                         {
-                            Debug.Log($"Enemy Removed");
-                            Gold_Gained += _Current_Enemy.Gold;
-                            XP_Gained += _Current_Enemy.Experience;
-                            Enemy_List[i].SetActive(false);
-                            Enemy_List.RemoveAt(i);
+                            if (Enemy_Target == Enemy_List[i])
+                            {
+                                Enemy_Script _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
+
+                                if (_Current_Enemy.Take_Damage(Damage))
+                                {
+                                    Debug.Log($"Enemy Removed");
+                                    Gold_Gained += _Current_Enemy.Gold;
+                                    XP_Gained += _Current_Enemy.Experience;
+                                    Enemy_List[i].SetActive(false);
+                                    Enemy_List.RemoveAt(i);
+                                }
+                                Speed = 0;
+                                Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                            }
                         }
                     }
+                    else
+                    {
+                        Debug.Log($"Projectile path is blocked");
+                    }
                 }
-                Speed = 0;
+                else
+                {
+                    Debug.Log($"Enemy is too far");
+                }
+            }
+
+   
+            if (_Distance <= _Range)
+            {
+               
             }
             else
             {
@@ -232,10 +270,38 @@ public class Player_Move : MonoBehaviour
         }
     }
 
+    private bool Check_For_Obstacles(Vector3 Start_Pos, Vector3 End_Pos, float _Angle)
+    {
+
+        Debug.Log($"Angle: {_Angle}");
+        for (int i = 0; i < Vector3.Distance(Start_Pos, End_Pos); i++)
+        {
+            Ray Starting_Ray = new UnityEngine.Ray(Start_Pos + Vector3.up + new Vector3(i * _Angle, 0, i * _Angle), new Vector3(0, -5, 0));
+            Debug.DrawRay(Start_Pos + Vector3.up + new Vector3(i * _Angle, 0, i * _Angle), new Vector3(0, -5, 0),Color.black,1000f);
+            if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
+            {
+                Combat_Tile_Script Temp = Hit_Start.collider.gameObject.GetComponentInChildren<Combat_Tile_Script>();
+                Debug.Log($"Coordinates: {Temp.Coordinates}");
+                if (Temp.gameObject.CompareTag("Combat_Tile"))
+                {
+                    if (Temp.Obstacle != Combat_Setup.Obstacles.None)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
     public void Defend()
     {
         if (Enemy_List.Count == 0)
         { Set_Enemies(); }
+        Defending = true;
+        Speed = 0;
+        Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
     }
 
     private void End_Turn()

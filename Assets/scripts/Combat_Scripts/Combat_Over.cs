@@ -36,7 +36,7 @@ public class Combat_Over : MonoBehaviour
         }
 
         Combat_End_Popup.SetActive(false);
-        Exit_Button.onClick.AddListener(Close_Combat);
+        Exit_Button.onClick.AddListener(Close_Combat);   
     }
 
     public void Close_Combat()
@@ -53,13 +53,13 @@ public class Combat_Over : MonoBehaviour
             case true:
                 Title.text = "GAME OVER";
                 Level_Up_Description.text = "You have died";
-                Stolen_Encounter_Image.sprite = null;
+                //Stolen_Encounter_Image.sprite = null;
                 break;
 
             case false:
                 Title.text = "VICTORY";
                 Level_Up_Description.text = "You have NOT died";
-                Stolen_Encounter_Image.sprite = null;
+               // Stolen_Encounter_Image.sprite = null;
                 break;
         }
 

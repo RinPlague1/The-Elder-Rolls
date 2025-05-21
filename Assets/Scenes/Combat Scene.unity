@@ -2415,6 +2415,7 @@ GameObject:
   - component: {fileID: 1013421620}
   - component: {fileID: 1013421621}
   - component: {fileID: 1013421622}
+  - component: {fileID: 1013421623}
   m_Layer: 0
   m_Name: Combat_Manager
   m_TagString: Untagged
@@ -2489,6 +2490,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Turn_Order: []
   Enemies: []
+--- !u!114 &1013421623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013421615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44cf182aa697e34eb5616be8c93312a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Combat_End_Popup: {fileID: 0}
+  Title: {fileID: 0}
+  Level_Up_Description: {fileID: 0}
+  Exit_Button: {fileID: 0}
+  Stolen_Encounter_Image: {fileID: 0}
+  Player_Controllers: []
+  Stolen_Combat_Icon: {fileID: 0}
+  Stolen_Overworld_Icon: {fileID: 0}
+  Sub_Encounter_Icons: []
 --- !u!1 &1028076541
 GameObject:
   m_ObjectHideFlags: 0

@@ -121,7 +121,7 @@ public class Enemy_Script : MonoBehaviour
                         //StartCoroutine(Delay_Action(1f));
                         StopAllCoroutines();
                         StartCoroutine(Enemy_Move_To_Tile(_Path[i - 1], _Path[i]));
-                        Delay_Action(1f);
+                        StartCoroutine(Delay_Action(1f));
                         _Speed--;
                         if (0 == _Speed) 
                         { break; }
@@ -139,7 +139,7 @@ public class Enemy_Script : MonoBehaviour
 
         for (int i = 0; i < Is_Player.Count; i++)
         {
-            if (Is_Player[i] == Player_Tile) 
+            if (Is_Player[i] == Player_Tile && !_Move.Defending) 
             {
                 _Move.Set_Health(_Move.Get_Health() - 60);
                 //if (_Player_Attributes.TakeDamage(_Player_Attributes.maxHealth))

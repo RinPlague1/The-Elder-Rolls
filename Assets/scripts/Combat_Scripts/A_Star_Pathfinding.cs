@@ -89,9 +89,14 @@ public class A_Star_Pathfinding :MonoBehaviour
 
                 foreach (Combat_Tile_Script Neighbour in Neighbours)
                 {
-                    if (_Closed_List.Contains(Neighbour))
-                    { continue; }
+                    if (Neighbour.Obstacle != Combat_Setup.Obstacles.None)
+                    {
+                        _Closed_List.Add(Neighbour);
+                        continue;
+                    }
+                    if (_Closed_List.Contains(Neighbour)) { continue; }
 
+                    
                     int Temp_G_Cost = Current_Node.G_Cost + Calculate_Distance(Current_Node, Neighbour);
                     
                     if (Temp_G_Cost < Neighbour.G_Cost)
