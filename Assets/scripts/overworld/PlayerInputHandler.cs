@@ -15,6 +15,11 @@ public class PlayerInputHandler : MonoBehaviour
         playerController = GetComponent<PlayerController>();
     }
 
+    private void Start()
+    {
+        StartCoroutine(InitialiseCamera());
+    }
+
     void Update()
     {
         if (!playerController.isActivePlayer) return;
@@ -39,5 +44,11 @@ public class PlayerInputHandler : MonoBehaviour
         {
             Debug.Log($"Attempting to interact with tile at {playerController.currentTile.coordinates}");
         }
+    }
+
+    private IEnumerator InitialiseCamera()
+    {
+        yield return new WaitForFixedUpdate();
+        GameManager.Instance.CycleActivePartyMember();
     }
 }
