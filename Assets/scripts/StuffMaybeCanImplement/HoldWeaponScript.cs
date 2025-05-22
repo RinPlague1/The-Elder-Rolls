@@ -15,7 +15,7 @@ public class HoldWeaponScript : MonoBehaviour
         Bow
     }
 
-    [Header("Get Model and Offset")]
+    [Header("USE THE PREFAB, CALL SETNEWHELD ON HAND OBJECT IN PIECES (ONLY CHARACTER PIECES SO FAR)")]
     public GameObject[] WeaponModels;
     public Vector3[] Offsets;
     public Vector3[] Rotations;
