@@ -24,6 +24,8 @@ public class Combat_Over : MonoBehaviour
     public Sprite Stolen_Overworld_Icon;
     public Sprite[] Sub_Encounter_Icons; // Assign in inspector in order of enum
 
+    public bool Game_Over;
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,7 +34,6 @@ public class Combat_Over : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
         }
 
         Combat_End_Popup.SetActive(false);
@@ -41,12 +42,20 @@ public class Combat_Over : MonoBehaviour
 
     public void Close_Combat()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-    }
+        if (!Game_Over)
+        {
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+        }
+       }
 
 
-    public void Show_Encounter(bool Game_Over)
+    public void Show_Encounter(bool Temp)
     {
+        Game_Over = Temp;
         //Set the popup content based on encounter type
         switch (Game_Over)
         {
