@@ -118,24 +118,56 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CycleActivePartyMember()
+    public void CycleActivePartyMember()
     {
         if (party.Count == 0) return;
 
-        // Deactivate current member
+        // Check if current player can switch
         PlayerController currentController = party[currentActiveMemberIndex].playerObject.GetComponent<PlayerController>();
-        if (currentController != null) currentController.SetAsActivePlayer(false);
+        if (currentController != null && !currentController.CanSwitch())
+        {
+            return;
+        }
+
+        // Deactivate current member
+        if (currentController != null)
+        {
+            currentController.SetAsActivePlayer(false);
+            party[currentActiveMemberIndex].attributes.movesLeft = party[currentActiveMemberIndex].attributes.maxMoves;
+            currentController.RegisterSwitch();
+        }
 
         // Move to next member
         currentActiveMemberIndex = (currentActiveMemberIndex + 1) % party.Count;
 
         // Activate new member
         PlayerController nextController = party[currentActiveMemberIndex].playerObject.GetComponent<PlayerController>();
-        if (nextController != null) nextController.SetAsActivePlayer(true);
+        if (nextController != null)
+        {
+            nextController.SetAsActivePlayer(true);
+            nextController.RegisterSwitch();
+
+            // Force camera update
+            if (nextController.isActivePlayer)
+            {
+                CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+                if (cameraFollow != null)
+                {
+                    cameraFollow.SetTarget(nextController.transform);
+                }
+            }
+        }
 
         Debug.Log($"Now controlling: {party[currentActiveMemberIndex].attributes.playerName}");
     }
 
+    public PlayerController GetActivePlayer()
+    {
+        if (party.Count == 0 || currentActiveMemberIndex >= party.Count)
+            return null;
+
+        return party[currentActiveMemberIndex].playerObject.GetComponent<PlayerController>();
+    }
 
     public void SetOverworldGrid(HexGrid grid)
     {

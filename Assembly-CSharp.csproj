@@ -70,6 +70,7 @@
     <Compile Include="Assets\scripts\Combat_Scripts\Enemy_Generation.cs" />
     <Compile Include="Assets\scripts\overworld\HexTileScript.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\PlayerDisplay.cs" />
+    <Compile Include="Assets\scripts\overworld\PlayerInputHandler.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Combat_Turn_Order.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Combat_Setup.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\MainMenuHandler.cs" />

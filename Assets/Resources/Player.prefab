@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3253454168730842808}
   - component: {fileID: 3352233068769824347}
   - component: {fileID: 4334945935154513328}
+  - component: {fileID: 8817129791491627352}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -119,12 +120,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d095809c845a7a44fbd8384bab6d8556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMoves: 5
-  currentMoves: 0
+  isActivePlayer: 0
   movesText: {fileID: 0}
+  currentTileText: {fileID: 0}
+  targetTileText: {fileID: 0}
+  activeIndicator: {fileID: 4590228796031718424, guid: 3fa9585c6126d034a8949963304f1c43, type: 3}
+  switchCooldown: 0.2
   moveSpeed: 5
-  currentTile: {fileID: 0}
-  targetTile: {fileID: 0}
+  rotationSpeed: 5
+  _currentTile: {fileID: 0}
+  _targetTile: {fileID: 0}
 --- !u!114 &4334945935154513328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +150,9 @@ MonoBehaviour:
   currentMana: 0
   Experinece: 0
   Level: 0
+  maxMoves: 5
+  movesLeft: 5
+  currentTile: {fileID: 0}
   primaryAttunement: 0
   secondaryAttunement: 0
   inventory: []
@@ -153,3 +161,17 @@ MonoBehaviour:
   galacticColor: {r: 0, g: 1, b: 1, a: 1}
   eldritchColor: {r: 1, g: 0, b: 1, a: 1}
   necroticColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &8817129791491627352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832243998262632910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672a22408ddf75d468682bef2bfe9bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switchCharacterKey: 32
+  interactKey: 101

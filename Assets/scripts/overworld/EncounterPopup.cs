@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EncounterPopup : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class EncounterPopup : MonoBehaviour
     public Sprite combatIcon;
     public Sprite overworldIcon;
     public Sprite[] subEncounterIcons; // Assign in inspector in order of enum
+
+    public HexTileScript.encounterType currentEncounterType;
+    public HexTileScript.subEncounter currentSubEncounter;
 
     private void Awake()
     {
@@ -45,18 +49,24 @@ public class EncounterPopup : MonoBehaviour
             case HexTileScript.encounterType.none:
                 titleText.text = "Safe Area";
                 descriptionText.text = "Nothing happens here.";
+                currentEncounterType = HexTileScript.encounterType.none;
+                currentSubEncounter = HexTileScript.subEncounter.healthUp;
                 //encounterIcon.sprite = null;
                 break;
 
             case HexTileScript.encounterType.combat:
                 titleText.text = "Combat Encounter!";
                 descriptionText.text = "Prepare for battle!";
+                currentEncounterType = HexTileScript.encounterType.combat;
+                currentSubEncounter = HexTileScript.subEncounter.healthUp;
                 //encounterIcon.sprite = combatIcon;
                 break;
 
             case HexTileScript.encounterType.overworldEncounter:
                 titleText.text = GetOverworldEncounterTitle(tile.assignedSubEncounter);
                 descriptionText.text = GetOverworldEncounterDescription(tile.assignedSubEncounter);
+                currentEncounterType = HexTileScript.encounterType.overworldEncounter;
+                currentSubEncounter = tile.assignedSubEncounter;
                 //encounterIcon.sprite = overworldIcon;
                 // Or use specific icon: encounterIcon.sprite = subEncounterIcons[(int)tile.assignedSubEncounter];
                 break;
@@ -99,6 +109,19 @@ public class EncounterPopup : MonoBehaviour
         popupPanel.SetActive(false);
         Time.timeScale = 1f; // Resume game
         
+        if (currentEncounterType == HexTileScript.encounterType.combat)
+        {
+            SceneManager.LoadScene(2);
+        }
+
+        if (currentEncounterType == HexTileScript.encounterType.overworldEncounter)
+        {
+            switch (currentSubEncounter)
+            {
+                case HexTileScript.subEncounter.healthUp:
+                    break;
+            }
+        }
         
         //playerControllers[0].GetComponent<PlayerController> 
         

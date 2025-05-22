@@ -8,13 +8,18 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-    private bool isActivePlayer = false;
+    public bool isActivePlayer = false;
     private CameraFollow cameraFollow;
 
     [Header("UI References")]
     public TextMeshProUGUI movesText;
     public TextMeshProUGUI currentTileText;
     public TextMeshProUGUI targetTileText;
+
+    [Header("Active Player Settings")]
+    public GameObject activeIndicator; // Visual indicator for active player
+    public float switchCooldown = 0.2f; // Cooldown between switches
+    private float lastSwitchTime = 0f;
 
     [Header("Movement Settings")]
     public float moveSpeed = 1.0f;
@@ -65,16 +70,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        hexGrid = GameManager.Instance.GetOverworldGrid();
-        if (hexGrid == null)
-        {
-            Debug.LogError("HexGrid not found in GameManager!");
-            return;
-        }
+        StartCoroutine(GetHexGridLayout());
 
-        SetInitialPosition();
-        UpdateMovesUI();
-        UpdateTileUI();
+        
     }
 
     void UpdateTileUI()
@@ -189,8 +187,11 @@ public class PlayerController : MonoBehaviour
         // Check if destination is a neighbor of current tile
         bool isNeighbor = currentTile.neighbors.Contains(destination);
 
-        // Additional checks can be added here (like tile accessibility)
-        return isNeighbor;
+        if (destination.tag == "HexTile")
+        {
+            return isNeighbor;
+        }
+        return false;
     }
 
     IEnumerator MoveToTile(HexTileScript destination)
@@ -260,11 +261,50 @@ public class PlayerController : MonoBehaviour
     public void SetAsActivePlayer(bool active)
     {
         isActivePlayer = active;
-        if (active && cameraFollow != null)
+
+        // Toggle visual indicator
+        if (activeIndicator != null)
         {
+            activeIndicator.SetActive(active);
+        }
+
+        // Set camera target
+        if (active)
+        {
+            // Ensure we have a camera follow reference
+            if (cameraFollow == null)
+            {
+                cameraFollow = Camera.main.GetComponent<CameraFollow>();
+                if (cameraFollow == null)
+                {
+                    Debug.LogError("No CameraFollow component found on main camera!");
+                    return;
+                }
+            }
+
             cameraFollow.SetTarget(transform);
         }
+
+        // Update UI immediately
         UpdateTileUI();
+        UpdateMovesUI();
+
+        // Enable/disable input components if needed
+        var inputHandler = GetComponent<PlayerInputHandler>();
+        if (inputHandler != null)
+        {
+            inputHandler.enabled = active;
+        }
+    }
+
+    public bool CanSwitch()
+    {
+        return Time.time - lastSwitchTime > switchCooldown;
+    }
+
+    public void RegisterSwitch()
+    {
+        lastSwitchTime = Time.time;
     }
 
     public void SetControlledCharacter(playerAttributes attributes)
@@ -288,5 +328,21 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(targetTile.transform.position + Vector3.up, 0.5f);
         }
+    }
+
+    private IEnumerator GetHexGridLayout()
+    {
+
+        yield return new WaitForFixedUpdate();
+        hexGrid = GameManager.Instance.GetOverworldGrid();
+        if (hexGrid == null)
+        {
+            Debug.LogError("HexGrid not found in GameManager!");
+            yield break;
+        }
+
+        SetInitialPosition();
+        UpdateMovesUI();
+        UpdateTileUI();
     }
 }

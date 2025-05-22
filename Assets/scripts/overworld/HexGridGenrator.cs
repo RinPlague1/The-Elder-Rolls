@@ -73,20 +73,24 @@ public class HexGrid : MonoBehaviour
             if (noiseValue < 0.3f)
             {
                 tile.SetBiome(BiomeType.Ocean);
+                tile.tag = ("Barrier");
                 oceanTiles.Add(tile);
             }
             else if (noiseValue < 0.4f)
             {
                 tile.SetBiome(BiomeType.Mountain);
+                tile.tag = ("Barrier");
                 mountainTiles.Add(tile);
             }
             else if (noiseValue < 0.6f)
             {
                 tile.SetBiome(BiomeType.Forest);
+                tile.tag = ("HexTile");
             }
             else
             {
                 tile.SetBiome(BiomeType.Grassland);
+                tile.tag = ("HexTile");
             }
         }
 
