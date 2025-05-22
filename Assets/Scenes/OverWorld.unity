@@ -756,21 +756,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 600733449867867221, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1588712844266796503, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2906268701907431785, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
       propertyPath: m_Name
       value: OverworldUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 3093608013900988576, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3705035567353153465, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
       propertyPath: m_Pivot.x
@@ -852,18 +840,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4796496255402793436, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: memberIdentifier
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211369485833040715, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: memberIdentifier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6099878593877204438, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6858181386723370469, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
       propertyPath: playerControllers.Array.data[0]
       value: 
@@ -880,10 +856,6 @@ PrefabInstance:
       propertyPath: playerControllers.Array.data[3]
       value: 
       objectReference: {fileID: 125398515}
-    - target: {fileID: 8933589764969938234, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
-      propertyPath: memberIdentifier
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

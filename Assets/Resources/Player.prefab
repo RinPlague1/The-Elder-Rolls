@@ -152,6 +152,7 @@ MonoBehaviour:
   currentMana: 0
   Experinece: 0
   Level: 0
+  EquippedWeapon: 0
   maxMoves: 5
   movesLeft: 5
   currentTile: {fileID: 0}
@@ -163,6 +164,9 @@ MonoBehaviour:
   galacticColor: {r: 0, g: 1, b: 1, a: 1}
   eldritchColor: {r: 1, g: 0, b: 1, a: 1}
   necroticColor: {r: 0, g: 1, b: 0, a: 1}
+  Longsword: 0
+  Hammer: 1
+  Bow: 2
 --- !u!114 &8817129791491627352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +231,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884936875051025593, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5.6176
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884936875051025593, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.034
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884936875051025593, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

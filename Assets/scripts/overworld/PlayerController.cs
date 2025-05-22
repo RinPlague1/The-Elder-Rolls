@@ -70,9 +70,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerAttributes component missing from player object!");
             return;
         }
-
-        FindUIReferences();
-
         StartCoroutine(GetHexGridLayout());
 
         
@@ -88,11 +85,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Find UI elements by name (make sure they have these names in your UI)
-        movesText = FindUIText(canvas.transform, "MovesDisplay");
+        // fuck you chat gippity we do it manually
+        movesText = canvas.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
         
 
-        if (movesText == null) Debug.LogWarning("MovesText not found in UI");
+        if (movesText == null) Debug.LogWarning("MovesDisplayText not found in UI");
         
     }
 
@@ -375,8 +372,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GetHexGridLayout()
     {
-
         yield return new WaitForFixedUpdate();
+
+        FindUIReferences();
         hexGrid = GameManager.Instance.GetOverworldGrid();
         if (hexGrid == null)
         {

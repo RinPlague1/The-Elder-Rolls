@@ -2982,6 +2982,7 @@ MonoBehaviour:
   characterPreview: {fileID: 796894520}
   attunementSlider: {fileID: 1866110351}
   confirmButton: {fileID: 2020353500}
+  playerModelColor: {r: 0.9294118, g: 0.64705884, b: 0.07058824, a: 1}
   classSprites: []
   skinColors: []
   hairColors: []
@@ -15526,6 +15527,7 @@ MonoBehaviour:
   characterPreview: {fileID: 523056973}
   attunementSlider: {fileID: 1231458156}
   confirmButton: {fileID: 139075047}
+  playerModelColor: {r: 0.16862746, g: 0.6117647, b: 0.039215688, a: 1}
   classSprites: []
   skinColors: []
   hairColors: []
@@ -16698,6 +16700,7 @@ MonoBehaviour:
   characterPreview: {fileID: 868905256}
   attunementSlider: {fileID: 2076072326}
   confirmButton: {fileID: 1749786705}
+  playerModelColor: {r: 0.31764707, g: 0.043137256, b: 0.5254902, a: 1}
   classSprites: []
   skinColors: []
   hairColors: []
@@ -17816,6 +17819,7 @@ MonoBehaviour:
   characterPreview: {fileID: 1914717188}
   attunementSlider: {fileID: 37631479}
   confirmButton: {fileID: 839473410}
+  playerModelColor: {r: 0.043137256, g: 0.4039216, b: 0.654902, a: 1}
   classSprites: []
   skinColors: []
   hairColors: []
