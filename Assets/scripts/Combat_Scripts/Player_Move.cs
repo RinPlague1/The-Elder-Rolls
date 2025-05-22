@@ -35,7 +35,7 @@ public class Player_Move : MonoBehaviour
 
     public playerAttributes _Current_Player_Attributes = new playerAttributes();
 
-    public int _Health = 12000;
+    public int _Health = 120;
     public int _Range = 5;
     public int Damage = 15;
     public bool Defending = false;
@@ -110,6 +110,10 @@ public class Player_Move : MonoBehaviour
             {
                 End_Turn();
                 Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                if (_Health <= 0)
+                {
+                    Combat_Over.Instance.Show_Encounter(true);
+                }
             }
             Debug.Log($"Movement Diactivated");
             Speed = 6;
@@ -125,40 +129,62 @@ public class Player_Move : MonoBehaviour
         if (Target_Tile != null)
         {
             Debug.Log($"Buttton pressed");
-            //if (_Health <= 0)
-            //{
-            //    Combat_Over.Instance.Show_Encounter(true);
-            //}
 
-
-            Current_Tile = Find_Tile(Player);
-
-            bool Checker = true;
-            if (Checker)
+            if (Target_Tile.Obstacle == Combat_Setup.Obstacles.None)
             {
-                if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+
+                if (Enemy_Check())
                 {
-                    StopAllCoroutines();
-                    StartCoroutine(Move_To_Tile(Target_Tile));
+
+                    Current_Tile = Find_Tile(Player);
+
+                    bool Checker = true;
+                    if (Checker)
+                    {
+                        if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+                        {
+                            StopAllCoroutines();
+                            StartCoroutine(Move_To_Tile(Target_Tile));
+                        }
+                        else
+                        { }
+                    }
+                    else
+                    { Debug.Log($"Tile is not free"); }
+
+
+
+                    if (Speed == 0)
+                    {
+                        Target_Tile = null;
+                        Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                        Debug.Log($"End Player Turn");
+                    }
                 }
                 else
-                { }
+                {
+                    Debug.Log($"Cannot move to a tile that has an enemy present");
+                }
             }
             else
-            { Debug.Log($"Tile is not free"); }
-
-
-
-            if (Speed == 0)
             {
-                Target_Tile = null;
-                Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
-                Debug.Log($"End Player Turn");
+                Debug.Log($"Cannot move to an obstacle tile");
             }
         }
         else
         { Debug.Log($"Select tile before moving"); }
     }
+
+    private bool Enemy_Check()
+    {
+        for (int i = 0; i < Enemy_List.Count; i++)
+        {
+            if (Target_Tile = Find_Tile(Enemy_List[i]))
+            { return false; }
+        }
+        return true;
+    }
+
 
 
     IEnumerator Move_To_Tile(Combat_Tile_Script Target_Tile)
@@ -208,59 +234,63 @@ public class Player_Move : MonoBehaviour
         {
             if (Current_Tile == null) { Current_Tile = Find_Tile(Player); }
             Target_Tile = Find_Tile(Enemy_Target);
+
+
+
             float _Distance = Vector3.Distance(Current_Tile.transform.position, Target_Tile.transform.position);
-            Debug.Log($"Current Tile: {Current_Tile.Coordinates}");
-            Debug.Log($"Current Tile: {Target_Tile.Coordinates}");
-            _Check_Path.Setup(Current_Tile, Target_Tile, _Turn_Order.gameObject);
-            _Projectile_Path = _Check_Path.Find_Path(Current_Tile.Coordinates.x, Current_Tile.Coordinates.y,
-            Target_Tile.Coordinates.x, Target_Tile.Coordinates.y);
+            //Debug.Log($"Current Tile: {Current_Tile.Coordinates}");
+            //Debug.Log($"Current Tile: {Target_Tile.Coordinates}");
+            //_Check_Path.Setup(Current_Tile, Target_Tile, _Turn_Order.gameObject);
+            //_Projectile_Path = _Check_Path.Find_Path(Current_Tile.Coordinates.x, Current_Tile.Coordinates.y,
+            //Target_Tile.Coordinates.x, Target_Tile.Coordinates.y);
 
-            if (_Projectile_Path != null)
-            {
-                if (_Projectile_Path.Count <= _Range)
-                {
-                    if (_Projectile_Path.Count <= _Distance)
-                    {
-                        for (int i = 0; i < Enemy_List.Count; i++)
-                        {
-                            if (Enemy_Target == Enemy_List[i])
-                            {
-                                Enemy_Script _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
+            //if (_Projectile_Path != null)
+            //{
+            //    if (_Projectile_Path.Count <= _Range)
+            //    {
+            //        if (_Projectile_Path.Count <= _Distance)
+            //        {
 
-                                if (_Current_Enemy.Take_Damage(Damage))
-                                {
-                                    Debug.Log($"Enemy Removed");
-                                    Gold_Gained += _Current_Enemy.Gold;
-                                    XP_Gained += _Current_Enemy.Experience;
-                                    Enemy_List[i].SetActive(false);
-                                    Enemy_List.RemoveAt(i);
-                                }
-                                Speed = 0;
-                                Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log($"Projectile path is blocked");
-                    }
-                }
-                else
-                {
-                    Debug.Log($"Enemy is too far");
-                }
-            }
-
-   
             if (_Distance <= _Range)
             {
-               
+                for (int i = 0; i < Enemy_List.Count; i++)
+                {
+
+                    if (Enemy_Target == Enemy_List[i])
+                    {
+                        Enemy_Script _Current_Enemy = Enemy_List[i].GetComponentInChildren<Enemy_Script>();
+
+                        if (_Current_Enemy.Take_Damage(Damage))
+                        {
+                            Debug.Log($"Enemy Removed");
+                            Gold_Gained += _Current_Enemy.Gold;
+                            XP_Gained += _Current_Enemy.Experience;
+                            Enemy_List[i].SetActive(false);
+                            Enemy_List.RemoveAt(i);
+                        }
+                        Speed = 0;
+                        Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                    }
+                }
             }
             else
             {
                 Target_Tile = null;
                 Debug.Log($"Target tile is out of range");
             }
+            //        }
+            //        else
+            //        {
+            //            Debug.Log($"Projectile path is blocked");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Debug.Log($"Enemy is too far");
+            //    }
+            //}
+
+
             if (Enemy_List.Count == 0)
             {
                 

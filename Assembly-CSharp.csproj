@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Assets\UI_Elements\UI_Scripts\SettingsMenu.cs" />
     <Compile Include="Assets\scripts\player\playerAttributes.cs" />
-    <Compile Include="Assets\InventoryMenuHandler.cs" />
     <Compile Include="Assets\scripts\overworld\TurnManager.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Enemy_Script.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Combat_Tile_Script.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="Assets\scripts\overworld\HexGridGenrator.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Combat_Over.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\MenuDisplay.cs" />
+    <Compile Include="Assets\UI_Elements\UI_Scripts\InventoryMenuHandler.cs" />
     <Compile Include="Assets\scripts\Combat_Scripts\Player_Move.cs" />
     <Compile Include="Assets\UI_Elements\UI_Scripts\QuestUI.cs" />
     <Compile Include="Assets\scripts\Menu_Scripts\characterCreator.cs" />
