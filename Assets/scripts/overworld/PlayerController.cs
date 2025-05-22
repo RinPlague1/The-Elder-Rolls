@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI References")]
     public TextMeshProUGUI movesText;
+    public TextMeshProUGUI maxMovesText;
     public TextMeshProUGUI currentTileText;
     public TextMeshProUGUI targetTileText;
 
@@ -70,9 +71,49 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        FindUIReferences();
+
         StartCoroutine(GetHexGridLayout());
 
         
+    }
+
+    private void FindUIReferences()
+    {
+        // Find the canvas that contains our UI elements
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogError("No Canvas found in scene!");
+            return;
+        }
+
+        // Find UI elements by name (make sure they have these names in your UI)
+        movesText = FindUIText(canvas.transform, "MovesDisplay");
+        
+
+        if (movesText == null) Debug.LogWarning("MovesText not found in UI");
+        
+    }
+
+    private TextMeshProUGUI FindUIText(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+            {
+                Debug.Log("child found");
+                return child.GetComponent<TextMeshProUGUI>();
+            }
+
+            // Search recursively in children
+            TextMeshProUGUI foundInChildren = FindUIText(child, name);
+            if (foundInChildren != null)
+            {
+                return foundInChildren;
+            }
+        }
+        return null;
     }
 
     void UpdateTileUI()
@@ -96,6 +137,7 @@ public class PlayerController : MonoBehaviour
     {
         if (movesText != null && playerAttrib != null)
         {
+            Debug.Log($"Moves: {playerAttrib.movesLeft}/{playerAttrib.maxMoves}");
             movesText.text = $"Moves: {playerAttrib.movesLeft}/{playerAttrib.maxMoves}";
         }
     }
@@ -226,6 +268,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnStepOntoTile(HexTileScript tile)
     {
+        
         if (!tile.beenVisited)
         {
             tile.beenVisited = true;
@@ -254,7 +297,7 @@ public class PlayerController : MonoBehaviour
         if (playerAttrib != null)
         {
             playerAttrib.movesLeft = playerAttrib.maxMoves;
-            UpdateMovesUI();
+            //UpdateMovesUI();
         }
     }
 
@@ -286,7 +329,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Update UI immediately
-        UpdateTileUI();
+       // UpdateTileUI();
         UpdateMovesUI();
 
         // Enable/disable input components if needed
@@ -310,8 +353,8 @@ public class PlayerController : MonoBehaviour
     public void SetControlledCharacter(playerAttributes attributes)
     {
         playerAttrib = attributes;
-        UpdateMovesUI();
-        UpdateTileUI();
+        //UpdateMovesUI();
+        //UpdateTileUI();
     }
 
     // Debug method to visualize current and target tiles

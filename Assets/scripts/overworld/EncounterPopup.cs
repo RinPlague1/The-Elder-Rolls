@@ -116,10 +116,23 @@ public class EncounterPopup : MonoBehaviour
 
         if (currentEncounterType == HexTileScript.encounterType.overworldEncounter)
         {
+            PlayerController currentplayer = GameManager.Instance.GetActivePlayer();
+            playerAttributes currentPlayerAttrib = currentplayer.GetComponent<playerAttributes>();
+
             switch (currentSubEncounter)
             {
                 case HexTileScript.subEncounter.healthUp:
+                    
+                    currentPlayerAttrib.maxHealth += 10;
+                    currentPlayerAttrib.currentHealth = currentPlayerAttrib.maxHealth;
+
                     break;
+                case HexTileScript.subEncounter.healthDown:
+                    currentPlayerAttrib.maxHealth -= 10;
+                    currentPlayerAttrib.currentHealth = currentPlayerAttrib.maxHealth;
+
+                    break;
+
             }
         }
         
