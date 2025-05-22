@@ -1,0 +1,5 @@
+> open the game and click the start button
+> enter char names and select classes - will move to overworld when all 4 are confirmed
+> press space when in OW and camera will go to players
+> keep clicking adjacent tiles until popup
+> keep going until die in combat
