@@ -30,7 +30,7 @@ public class CharacterCreator : MonoBehaviour
     private int skinColorIndex = 0;
     private int hairStyleIndex = 0;
     private int hairColorIndex = 0;
-
+    private HoldWeaponScript.Weapons HeldWeapon = HoldWeaponScript.Weapons.Longsword;
 
     [Header("Default Names")]
     public string[] warriorNames = { "Garrick", "Thrain", "Brynn", "Eldric" };
@@ -51,6 +51,7 @@ public class CharacterCreator : MonoBehaviour
         public MagicAttunement primaryAttunement;
         // Testing Purpose To Differentiate Models.
         public Color ModelColor;
+        public HoldWeaponScript.Weapons HeldWeapon;
         public int skinColorIndex;
         public int hairStyleIndex;
         public int hairColorIndex;
@@ -219,26 +220,31 @@ public class CharacterCreator : MonoBehaviour
             if (selectedClass == PlayerClass.Warrior)
             {
                 nameInput.text = GetRandomName(warriorNames);
+                HeldWeapon = HoldWeaponScript.Weapons.Longsword;
             }
 
             if (selectedClass == PlayerClass.Cleric)
             {
                 nameInput.text = GetRandomName(clericNames);
+                HeldWeapon = HoldWeaponScript.Weapons.Hammer;
             }
 
             if (selectedClass == PlayerClass.Rogue)
             {
                 nameInput.text = GetRandomName(rogueNames);
+                HeldWeapon = HoldWeaponScript.Weapons.Longsword;
             }
 
             if (selectedClass == PlayerClass.Mage)
             {
                 nameInput.text = GetRandomName(mageNames);
+                HeldWeapon = HoldWeaponScript.Weapons.Hammer;
             }
 
             if (selectedClass == PlayerClass.Ranger)
             {
                 nameInput.text = GetRandomName(rangerNames);
+                HeldWeapon = HoldWeaponScript.Weapons.Bow;
             }
 
 
@@ -279,6 +285,7 @@ public class CharacterCreator : MonoBehaviour
             playerClass = selectedClass,
             primaryAttunement = primaryAttunement,
             ModelColor = playerModelColor,
+            HeldWeapon = HeldWeapon,
             skinColorIndex = skinColorIndex,
             hairStyleIndex = hairStyleIndex,
             hairColorIndex = hairColorIndex,

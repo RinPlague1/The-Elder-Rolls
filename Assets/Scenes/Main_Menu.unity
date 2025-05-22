@@ -10431,6 +10431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032273051}
   - component: {fileID: 1032273050}
+  - component: {fileID: 1032273052}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -10467,6 +10468,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032273052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032273049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e680bdf90578ad14383d302da1182c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponModels:
+  - {fileID: 1345412701634397267, guid: cb80c7ccc01155d45a26ba3c90830a84, type: 3}
+  - {fileID: 4317965814499752689, guid: 3043a575467f2674a8886f993fa4ccd3, type: 3}
+  - {fileID: 6805061785295723717, guid: fb27634f567647f47a592ca2643d51e7, type: 3}
+  Offsets:
+  - {x: 0, y: 0, z: 16}
+  - {x: 0, y: 0, z: 17}
+  - {x: -1, y: 3.72, z: 0}
+  Rotations:
+  - {x: -90, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 291.94022, y: 270, z: 90}
 --- !u!1 &1039394106
 GameObject:
   m_ObjectHideFlags: 0

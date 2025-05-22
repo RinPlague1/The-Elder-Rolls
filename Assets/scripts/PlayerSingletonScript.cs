@@ -296,6 +296,9 @@ public class GameManager : MonoBehaviour
         GameObject playerInstance = Instantiate(playerPrefab);
         playerAttributes attributes = playerInstance.GetComponent<playerAttributes>();
 
+        //Add the weapon to player piece
+        _Instance.GetComponent<HoldWeaponScript>().SetNewHeldWeapon(playerInstance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject, _incomingInstansiate.HeldWeapon);
+
         // Configure the player
         attributes.playerName = _incomingInstansiate.characterName;
         attributes.playerClass = _incomingInstansiate.playerClass;
