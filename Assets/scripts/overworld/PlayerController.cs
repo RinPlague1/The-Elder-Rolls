@@ -7,133 +7,229 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public int maxMoves = 5;
-    public int currentMoves;
-    public TextMeshProUGUI movesText;
+    public static PlayerController Instance;
+    private bool isActivePlayer = false;
+    private CameraFollow cameraFollow;
 
+    [Header("UI References")]
+    public TextMeshProUGUI movesText;
+    public TextMeshProUGUI currentTileText;
+    public TextMeshProUGUI targetTileText;
+
+    [Header("Movement Settings")]
     public float moveSpeed = 1.0f;
+    public float rotationSpeed = 5.0f;
+
+    [Header("Tile References")]
+    [SerializeField] private HexTileScript _currentTile;
+    [SerializeField] private HexTileScript _targetTile;
 
     private HexGrid hexGrid;
-    public HexTileScript currentTile;
+    private playerAttributes playerAttrib;
+    private bool isMoving = false;
 
-    public HexTileScript targetTile;
+    // Public properties with validation
+    public HexTileScript currentTile
+    {
+        get => _currentTile;
+        set
+        {
+            _currentTile = value;
+            if (playerAttrib != null) playerAttrib.currentTile = value;
+            UpdateTileUI();
+        }
+    }
+
+    public HexTileScript targetTile
+    {
+        get => _targetTile;
+        set
+        {
+            _targetTile = value;
+            UpdateTileUI();
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+        cameraFollow = Camera.main.GetComponent<CameraFollow>();
+    }
 
     void Start()
     {
-        hexGrid = FindObjectOfType<HexGrid>();
+        playerAttrib = GetComponent<playerAttributes>();
+        if (playerAttrib == null)
+        {
+            Debug.LogError("PlayerAttributes component missing from player object!");
+            return;
+        }
+
+        hexGrid = GameManager.Instance.GetOverworldGrid();
+        if (hexGrid == null)
+        {
+            Debug.LogError("HexGrid not found in GameManager!");
+            return;
+        }
+
         SetInitialPosition();
-        currentMoves = maxMoves; // Initialize moves
         UpdateMovesUI();
+        UpdateTileUI();
+    }
+
+    void UpdateTileUI()
+    {
+        if (currentTileText != null)
+        {
+            currentTileText.text = currentTile != null ?
+                $"Current: {currentTile.coordinates}\nBiome: {currentTile.biome}" :
+                "Current: None";
+        }
+
+        if (targetTileText != null)
+        {
+            targetTileText.text = targetTile != null ?
+                $"Target: {targetTile.coordinates}\nBiome: {targetTile.biome}" :
+                "Target: None";
+        }
     }
 
     void UpdateMovesUI()
     {
-        if (movesText != null)
+        if (movesText != null && playerAttrib != null)
         {
-            movesText.text = $"Moves: {currentMoves}/{maxMoves}";
+            movesText.text = $"Moves: {playerAttrib.movesLeft}/{playerAttrib.maxMoves}";
         }
     }
 
     void SetInitialPosition()
     {
-        Dictionary<Vector2Int, HexTileScript> allTiles = hexGrid.GetAllTiles();
+        var validTiles = GameManager.Instance.GetAllTiles()
+            .Where(t => t.Value.gameObject.tag != "Barrier")
+            .Select(t => t.Value)
+            .ToList();
 
-        // Find the first non-barrier tile
-        foreach (var tile in allTiles.Values)
+        if (validTiles.Count > 0)
         {
-            if (tile.gameObject.tag != "Barrier")
-            {
-                currentTile = tile;
-                transform.position = tile.transform.position + Vector3.up * 0.5f; // Adjust height if needed
-                break;
-            }
+            // Find the closest valid tile to the center
+            HexTileScript spawnTile = validTiles
+                .OrderBy(t => Vector2.Distance(t.coordinates, new Vector2(hexGrid.width / 2, hexGrid.height / 2)))
+                .First();
+
+            transform.position = spawnTile.transform.position + Vector3.up * 0.5f;
+            currentTile = spawnTile;
+            targetTile = null;
+        }
+        else
+        {
+            Debug.LogError("No valid spawn tiles found!");
         }
     }
 
     void Update()
     {
+        if (!isActivePlayer || isMoving) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            // Check if player has moves left
-            if (currentMoves <= 0)
+            HandleTileSelection();
+        }
+    }
+
+    void HandleTileSelection()
+    {
+        if (playerAttrib == null || playerAttrib.movesLeft <= 0)
+        {
+            Debug.Log("No moves left or player attributes missing!");
+            return;
+        }
+
+        if (Camera.main == null)
+        {
+            Debug.LogError("Main camera not found!");
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider == null || !hit.collider.CompareTag("HexTile"))
             {
-                Debug.Log("No moves left!");
+                Debug.Log("No valid tile selected");
                 return;
             }
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            HexTileScript selectedTile = hit.collider.GetComponent<HexTileScript>();
+            if (selectedTile == null)
             {
-                if (hit.collider.CompareTag("HexTile"))
-                {
-                    targetTile = hit.collider.GetComponent<HexTileScript>();
+                Debug.Log("Selected tile has no HexTileScript component");
+                return;
+            }
 
-                    bool isNeighbor = false;
-                    foreach (HexTileScript neighbor in currentTile.neighbors)
-                    {
-                        if (neighbor.name == targetTile.name)
-                        {
-                            isNeighbor = true;
-                            break;
-                        }
-                    }
+            if (currentTile == null)
+            {
+                Debug.LogWarning("Current tile is null - resetting position");
+                SetInitialPosition();
+                return;
+            }
 
-                    if (isNeighbor)
-                    {
-                        currentMoves--; // Deduct move
-                        UpdateMovesUI(); // Update UI
-                        StopAllCoroutines();
-                        StartCoroutine(MoveToTile(targetTile));
-                    }
-                }
+            if (IsValidMove(selectedTile))
+            {
+                targetTile = selectedTile;
+                playerAttrib.movesLeft--;
+                UpdateMovesUI();
+                StartCoroutine(MoveToTile(targetTile));
             }
         }
     }
 
-    public void ResetMoves()
+    bool IsValidMove(HexTileScript destination)
     {
-        currentMoves = maxMoves;
-        UpdateMovesUI();
+        // Check if destination is a neighbor of current tile
+        bool isNeighbor = currentTile.neighbors.Contains(destination);
+
+        // Additional checks can be added here (like tile accessibility)
+        return isNeighbor;
     }
 
-    IEnumerator MoveToTile(HexTileScript targetTile)
+    IEnumerator MoveToTile(HexTileScript destination)
     {
+        isMoving = true;
         Vector3 startPos = transform.position;
-        Vector3 endPos = targetTile.transform.position;
-        Debug.Log($"target tile transform: {targetTile.transform.position}");
-        endPos.y = startPos.y; // Maintain player's height
+        Vector3 endPos = destination.transform.position + Vector3.up * 0.5f;
+
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = Quaternion.LookRotation(endPos - startPos);
 
         float elapsedTime = 0f;
         float moveDuration = Vector3.Distance(startPos, endPos) / moveSpeed;
 
         while (elapsedTime < moveDuration)
         {
-            //transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
-            transform.position = endPos;
-            
+            transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
+            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsedTime / moveDuration);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.position = endPos;
-        OnStepOntoTile(targetTile);
-    }
+        transform.rotation = endRot;
 
+        currentTile = destination;
+        targetTile = null;
+        OnStepOntoTile(destination);
+        isMoving = false;
+    }
 
     private void OnStepOntoTile(HexTileScript tile)
     {
-        currentTile = targetTile; // Update current tile
-        Debug.Log($"current tile reassigned: {currentTile}");
         if (!tile.beenVisited)
         {
             tile.beenVisited = true;
-                        
             TriggerEncounter(tile);
-            
         }
-
-        currentTile = tile; // Track where the player is
     }
 
     private void TriggerEncounter(HexTileScript tile)
@@ -146,13 +242,51 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"Sub Encounter: {tile.assignedSubEncounter}");
         }
 
-        // Show the popup
-
-        if (currentMoves == 0)
-        { 
-        EncounterPopup.Instance.ShowEncounter(tile);
-    
+        if (playerAttrib.movesLeft == 0)
+        {
+            EncounterPopup.Instance.ShowEncounter(tile);
         }
     }
 
+    public void ResetMoves()
+    {
+        if (playerAttrib != null)
+        {
+            playerAttrib.movesLeft = playerAttrib.maxMoves;
+            UpdateMovesUI();
+        }
+    }
+
+    public void SetAsActivePlayer(bool active)
+    {
+        isActivePlayer = active;
+        if (active && cameraFollow != null)
+        {
+            cameraFollow.SetTarget(transform);
+        }
+        UpdateTileUI();
+    }
+
+    public void SetControlledCharacter(playerAttributes attributes)
+    {
+        playerAttrib = attributes;
+        UpdateMovesUI();
+        UpdateTileUI();
+    }
+
+    // Debug method to visualize current and target tiles
+    void OnDrawGizmosSelected()
+    {
+        if (currentTile != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(currentTile.transform.position + Vector3.up, 0.5f);
+        }
+
+        if (targetTile != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(targetTile.transform.position + Vector3.up, 0.5f);
+        }
+    }
 }

@@ -36,6 +36,13 @@ public class playerAttributes : MonoBehaviour
     public int Experinece;
     public int Level;
 
+    [Header("Movement")]
+    public int maxMoves = 5;
+    public int movesLeft = 5;
+
+    [Header("Position")]
+    public HexTileScript currentTile;
+
     [Header("Magic System")]
     public MagicAttunement primaryAttunement = MagicAttunement.None;
     public MagicAttunement secondaryAttunement = MagicAttunement.None;
@@ -96,6 +103,24 @@ public class playerAttributes : MonoBehaviour
 
         currentHealth = maxHealth;
         currentMana = maxMana;
+
+        switch (playerClass)
+        {
+            case PlayerClass.Rogue:
+                maxMoves = 6; // Rogues get extra mobility
+                break;
+            case PlayerClass.Warrior:
+                maxMoves = 4; // Warriors are slower
+                break;
+            default:
+                maxMoves = 5;
+                break;
+        }
+
+        movesLeft = maxMoves;
+
+
+
     }
 
     public bool TakeDamage(int amount)

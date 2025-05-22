@@ -36,8 +36,14 @@ public class GameManager : MonoBehaviour
 
     private List<CharacterCreator.CharacterCreationData> characterDataList= new List<CharacterCreator.CharacterCreationData>();
 
+    private HexGrid overworldGrid;
+
     [Tooltip("Assign in inspector or place in Resources folder")]
     public GameObject playerPrefab;
+
+    private int currentActiveMemberIndex = 0;
+    private float switchCooldown = 0.5f;
+    private float lastSwitchTime = 0f;
 
 
     private List<PartyMember> party = new List<PartyMember>();
@@ -96,14 +102,70 @@ public class GameManager : MonoBehaviour
                     currentSceneState = SceneState.Overworld;
                 }
                 break;
+
+            case SceneState.Overworld:
+                if (currentSceneState == SceneState.Overworld && Input.GetKeyDown(KeyCode.Space))
+{
+                    if (Time.time - lastSwitchTime > switchCooldown)
+                    {
+                        CycleActivePartyMember();
+                        lastSwitchTime = Time.time;
+                    }
+                }
+
+
+                break;
         }
     }
+
+    private void CycleActivePartyMember()
+    {
+        if (party.Count == 0) return;
+
+        // Deactivate current member
+        PlayerController currentController = party[currentActiveMemberIndex].playerObject.GetComponent<PlayerController>();
+        if (currentController != null) currentController.SetAsActivePlayer(false);
+
+        // Move to next member
+        currentActiveMemberIndex = (currentActiveMemberIndex + 1) % party.Count;
+
+        // Activate new member
+        PlayerController nextController = party[currentActiveMemberIndex].playerObject.GetComponent<PlayerController>();
+        if (nextController != null) nextController.SetAsActivePlayer(true);
+
+        Debug.Log($"Now controlling: {party[currentActiveMemberIndex].attributes.playerName}");
+    }
+
+
+    public void SetOverworldGrid(HexGrid grid)
+    {
+        overworldGrid = grid;
+    }
+
+    public HexGrid GetOverworldGrid()
+    {
+        return overworldGrid;
+    }
+
+    public HexTileScript GetTileAt(Vector2Int coordinates)
+    {
+        if (overworldGrid != null)
+        {
+            return overworldGrid.GetTileAt(coordinates);
+        }
+        return null;
+    }
+
+
 
     public void SetCharacterCreationData(CharacterCreator.CharacterCreationData data)
     {
         characterCreationData = data;
         characterDataList.Add(data);
     }
+
+
+
 
     public void AddCharacterToParty(GameObject playerObject, PlayerSlot slot)
     {
@@ -174,6 +236,19 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager initialized");
     }
 
+    public PartyMember GetElectedMember(int _electedPlace)
+    {
+        return party[_electedPlace];
+    }
+
+    public Dictionary<Vector2Int, HexTileScript> GetAllTiles()
+    {
+        if (overworldGrid != null)
+        {
+            return overworldGrid.GetAllTiles();
+        }
+        return new Dictionary<Vector2Int, HexTileScript>();
+    }
 
     public void CreatePlayerInOverworld(CharacterCreator.CharacterCreationData _incomingInstansiate)
     {
@@ -187,8 +262,6 @@ public class GameManager : MonoBehaviour
 
 
         GameObject playerInstance = Instantiate(playerPrefab);
-
-        // Instantiate the player
         playerAttributes attributes = playerInstance.GetComponent<playerAttributes>();
 
         // Configure the player
@@ -200,9 +273,48 @@ public class GameManager : MonoBehaviour
         // Add to party
         AddCharacterToParty(playerInstance, _incomingInstansiate.assignedSlot);
 
+        HexGrid grid = GetOverworldGrid();
+        if (grid != null)
+        {
+            Dictionary<Vector2Int, HexTileScript> allTiles = grid.GetAllTiles();
+            foreach (var tile in allTiles.Values)
+            {
+                if (tile.gameObject.tag != "Barrier")
+                {
+                    playerInstance.transform.position = tile.transform.position + Vector3.up * 0.5f;
+                    PlayerController controller = playerInstance.GetComponent<PlayerController>();
+                    if (controller != null)
+                    {
+                        controller.currentTile = tile;
+                        attributes.currentTile = tile;
+                    }
+                    break;
+                }
+            }
+        }
+
+
         // Position the player (you might want to set this based on your overworld)
         playerInstance.transform.position = Vector3.zero;
+
+        if (party.Count == 0)
+        {
+            PlayerController controller = playerInstance.GetComponent<PlayerController>();
+            if (controller != null) controller.SetAsActivePlayer(true);
+        }
+
     }
 
+
+    public void ResetAllMoves()
+    {
+        foreach (PartyMember member in party)
+        {
+            if (member.attributes != null)
+            {
+                member.attributes.movesLeft = member.attributes.maxMoves;
+            }
+        }
+    }
 
 }

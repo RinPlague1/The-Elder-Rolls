@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using static GameManager;
 
 public class PlayerDisplay : MonoBehaviour
 {
     // Replace with char info file later
+    public int memberIdentifier = 0;
+   
+    public GameManager.PartyMember electedMember;
+
     public string CharacterName = "CHARNAME";
     public string CharacterHealth = "100";
     public string CharacterMaxHealth = "100";
@@ -23,9 +28,13 @@ public class PlayerDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NameBox.text = CharacterName;
-        HealthBox.text = "HP: " +CharacterHealth + "/" + CharacterMaxHealth;
-        ManaBox.text = "MP: " +CharacterMana + "/" + CharacterMaxMana;
+
+
+        electedMember = GameManager.Instance.GetElectedMember(memberIdentifier);
+
+        NameBox.text = electedMember.attributes.playerName;
+        HealthBox.text = "HP: " + electedMember.attributes.currentHealth + "/" + electedMember.attributes.maxHealth;
+        ManaBox.text = "MP: " + electedMember.attributes.currentMana + "/" + electedMember.attributes.maxMana;
         HeadImageBox.sprite = CharacterHead;
     }
 
