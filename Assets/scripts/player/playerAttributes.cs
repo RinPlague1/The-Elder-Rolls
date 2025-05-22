@@ -35,6 +35,7 @@ public class playerAttributes : MonoBehaviour
     public int currentMana;
     public int Experinece;
     public int Level;
+    public HoldWeaponScript.Weapons EquippedWeapon;
 
     [Header("Movement")]
     public int maxMoves = 5;
@@ -58,6 +59,11 @@ public class playerAttributes : MonoBehaviour
     public Color eldritchColor = Color.magenta;
     public Color necroticColor = Color.green;
 
+    [Header("Weapons")]
+    public HoldWeaponScript.Weapons Longsword = HoldWeaponScript.Weapons.Longsword;
+    public HoldWeaponScript.Weapons Hammer = HoldWeaponScript.Weapons.Hammer;
+    public HoldWeaponScript.Weapons Bow = HoldWeaponScript.Weapons.Bow;
+
     private void Awake()
     {
         InitializeAttributes();
@@ -80,24 +86,29 @@ public class playerAttributes : MonoBehaviour
             case PlayerClass.Warrior:
                 maxHealth = 120;
                 maxMana = 20;
+                EquippedWeapon = Longsword;
                 break;
             case PlayerClass.Mage:
                 maxHealth = 70;
                 maxMana = 100;
                 primaryAttunement = MagicAttunement.Galactic;
+                EquippedWeapon = Hammer;
                 break;
             case PlayerClass.Rogue:
                 maxHealth = 90;
                 maxMana = 40;
+                EquippedWeapon = Longsword;
                 break;
             case PlayerClass.Cleric:
                 maxHealth = 100;
                 maxMana = 80;
                 primaryAttunement = MagicAttunement.Necrotic;
+                EquippedWeapon = Hammer;
                 break;
             case PlayerClass.Ranger:
                 maxHealth = 80;
                 maxMana = 60;
+                EquippedWeapon = Bow;
                 break;
         }
 

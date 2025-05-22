@@ -300,6 +300,8 @@ public class GameManager : MonoBehaviour
         attributes.playerName = _incomingInstansiate.characterName;
         attributes.playerClass = _incomingInstansiate.playerClass;
         attributes.primaryAttunement = _incomingInstansiate.primaryAttunement;
+        // Change the color
+        playerInstance.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.color = _incomingInstansiate.ModelColor;
         attributes.InitializeAttributes();
 
         // Add to party

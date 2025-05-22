@@ -12,6 +12,7 @@ public class CharacterCreator : MonoBehaviour
     public TMP_Dropdown attunementSlider;
     //public TextMeshProUGUI attunementDescription;
     public Button confirmButton;
+    public Color playerModelColor;
 
     [Header("Visual Options")]
     public List<Sprite> classSprites;
@@ -48,6 +49,8 @@ public class CharacterCreator : MonoBehaviour
         public string characterName;
         public PlayerClass playerClass;
         public MagicAttunement primaryAttunement;
+        // Testing Purpose To Differentiate Models.
+        public Color ModelColor;
         public int skinColorIndex;
         public int hairStyleIndex;
         public int hairColorIndex;
@@ -275,6 +278,7 @@ public class CharacterCreator : MonoBehaviour
             characterName = nameInput.text,
             playerClass = selectedClass,
             primaryAttunement = primaryAttunement,
+            ModelColor = playerModelColor,
             skinColorIndex = skinColorIndex,
             hairStyleIndex = hairStyleIndex,
             hairColorIndex = hairColorIndex,
