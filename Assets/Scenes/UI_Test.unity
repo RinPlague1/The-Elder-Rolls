@@ -155,7 +155,14 @@ MonoBehaviour:
   - {fileID: 1345412701634397267, guid: cb80c7ccc01155d45a26ba3c90830a84, type: 3}
   - {fileID: 4317965814499752689, guid: 3043a575467f2674a8886f993fa4ccd3, type: 3}
   - {fileID: 6805061785295723717, guid: fb27634f567647f47a592ca2643d51e7, type: 3}
-  Z_Offset: 0f0000001100000000000000
+  Offsets:
+  - {x: 0, y: 0, z: 16}
+  - {x: 0, y: 0, z: 17}
+  - {x: -1, y: 3.72, z: 0}
+  Rotations:
+  - {x: 90, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!4 &389496680
 Transform:
   m_ObjectHideFlags: 0
@@ -433,7 +440,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3819038476249035721, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
