@@ -156,6 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActivePlayer: 0
   movesText: {fileID: 2062341118}
+  maxMovesText: {fileID: 0}
   currentTileText: {fileID: 0}
   targetTileText: {fileID: 0}
   activeIndicator: {fileID: 0}
@@ -667,6 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActivePlayer: 0
   movesText: {fileID: 2062341118}
+  maxMovesText: {fileID: 0}
   currentTileText: {fileID: 0}
   targetTileText: {fileID: 0}
   activeIndicator: {fileID: 0}
@@ -887,6 +889,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a4858e028177224f91f68f4c6ded8da, type: 3}
+--- !u!1001 &1791808923
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2582494930858305690, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_Name
+      value: WeaponHoldManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583841362461264827, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b1edb67a65cb5147a5cf0c0349be437, type: 3}
 --- !u!1 &1970237850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActivePlayer: 0
   movesText: {fileID: 2062341118}
+  maxMovesText: {fileID: 0}
   currentTileText: {fileID: 0}
   targetTileText: {fileID: 0}
   activeIndicator: {fileID: 0}
@@ -1167,3 +1227,4 @@ SceneRoots:
   - {fileID: 1970237853}
   - {fileID: 1037081564}
   - {fileID: 1697916887}
+  - {fileID: 1791808923}
