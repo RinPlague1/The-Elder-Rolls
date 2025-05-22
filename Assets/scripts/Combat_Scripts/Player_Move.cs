@@ -45,6 +45,7 @@ public class Player_Move : MonoBehaviour
 
     public Button _Move_Button, _Attack_Button, _Defend_Button;
 
+    GameObject Effect;
 
     private void Start()
     {
@@ -64,12 +65,14 @@ public class Player_Move : MonoBehaviour
     void Update()
     {
         //StartCoroutine(Move_Camera()
+        if (Enemy_List.Count == 0)
+        { Set_Enemies(); }
 
         if (_Current_Player_Attributes == null)
         {
             _Current_Player_Attributes = Get_Player_Attributes();
         }
-        Movement_Remaining.text = "Movement Remaining = " + Speed.ToSafeString();
+        Movement_Remaining.text = "Moves: " + Speed.ToSafeString();
         //StartCoroutine(Move_Camera()
 
         if (Input.GetMouseButtonDown(0))
@@ -82,6 +85,12 @@ public class Player_Move : MonoBehaviour
             {
                 if (Hit_Target.collider.CompareTag("Combat_Tile")) //&& hit.collider.CompareTag("Neighrbour"))
                 {
+                   
+                    if (Target_Tile != null)
+                    {
+                        Effect = Target_Tile.transform.GetChild(0).gameObject;
+                        Effect.SetActive(false);
+                    }
                     Target_Tile = null;
                     int Target_X, Target_Y;
                     Target_Tile = Hit_Target.collider.GetComponent<Combat_Tile_Script>();
@@ -94,6 +103,8 @@ public class Player_Move : MonoBehaviour
 
 
                     Vector2Int Target_Coord_Vec = Target_Tile.Coordinates;
+                    Effect = Target_Tile.transform.GetChild(0).gameObject;
+                    Effect.SetActive(true);
                 }
                 else if (Hit_Target.collider.CompareTag("Combat_Enemy"))
                 {
@@ -124,8 +135,7 @@ public class Player_Move : MonoBehaviour
 
     public void Move()
     {
-        if (Enemy_List.Count == 0)
-        { Set_Enemies(); }
+     
         if (Target_Tile != null)
         {
             Debug.Log($"Buttton pressed");
@@ -133,10 +143,10 @@ public class Player_Move : MonoBehaviour
             if (Target_Tile.Obstacle == Combat_Setup.Obstacles.None)
             {
 
-                if (Enemy_Check())
-                {
+                    Current_Tile = Find_Tile(Current_Turn);
 
-                    Current_Tile = Find_Tile(Player);
+                //if (Enemy_Check())
+                //{
 
                     bool Checker = true;
                     if (Checker)
@@ -160,11 +170,11 @@ public class Player_Move : MonoBehaviour
                         Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
                         Debug.Log($"End Player Turn");
                     }
-                }
-                else
-                {
-                    Debug.Log($"Cannot move to a tile that has an enemy present");
-                }
+                //}
+                //else
+                //{
+                //    Debug.Log($"Cannot move to a tile that has an enemy present");
+                //}
             }
             else
             {
@@ -173,6 +183,7 @@ public class Player_Move : MonoBehaviour
         }
         else
         { Debug.Log($"Select tile before moving"); }
+        Effect.SetActive(false);
     }
 
     private bool Enemy_Check()
@@ -228,8 +239,6 @@ public class Player_Move : MonoBehaviour
         A_Star_Pathfinding _Check_Path = this.gameObject.GetComponentInChildren<A_Star_Pathfinding>();
         List<Combat_Tile_Script> _Projectile_Path = new List<Combat_Tile_Script>();
 
-        if (Enemy_List.Count == 0)
-        { Set_Enemies(); }
         if (Enemy_Target != null)
         {
             if (Current_Tile == null) { Current_Tile = Find_Tile(Player); }
@@ -298,6 +307,7 @@ public class Player_Move : MonoBehaviour
                 Combat_Over.Instance.Show_Encounter(false);
             }
         }
+        Effect.SetActive(false);
     }
 
     private bool Check_For_Obstacles(Vector3 Start_Pos, Vector3 End_Pos, float _Angle)
@@ -327,11 +337,10 @@ public class Player_Move : MonoBehaviour
 
     public void Defend()
     {
-        if (Enemy_List.Count == 0)
-        { Set_Enemies(); }
         Defending = true;
         Speed = 0;
         Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+        Effect.SetActive(false);
     }
 
     private void End_Turn()
@@ -391,7 +400,6 @@ public class Player_Move : MonoBehaviour
                 Current_Tile = Hit_Start.collider.GetComponent<Combat_Tile_Script>();
                 Current_X = Current_Tile.Coordinates.x;
                 Current_Y = Current_Tile.Coordinates.y;
-
             }
         }
         return Current_Tile;

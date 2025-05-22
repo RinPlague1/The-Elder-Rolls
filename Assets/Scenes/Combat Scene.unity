@@ -1250,6 +1250,7 @@ MonoBehaviour:
   Stolen_Combat_Icon: {fileID: 0}
   Stolen_Overworld_Icon: {fileID: 0}
   Sub_Encounter_Icons: []
+  Game_Over: 0
 --- !u!1 &557057992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,6 +2512,7 @@ MonoBehaviour:
   Stolen_Combat_Icon: {fileID: 0}
   Stolen_Overworld_Icon: {fileID: 0}
   Sub_Encounter_Icons: []
+  Game_Over: 0
 --- !u!1 &1028076541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,7 +4478,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: title
+  m_text: 'Moves: 5'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 751794ac7f03dc744b47e55f8f163fc5, type: 2}
   m_sharedMaterial: {fileID: -6633111176255030658, guid: 751794ac7f03dc744b47e55f8f163fc5, type: 2}
@@ -4503,7 +4505,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 108
+  m_fontSize: 82.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
