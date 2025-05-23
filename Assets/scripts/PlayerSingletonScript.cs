@@ -115,9 +115,6 @@ public class GameManager : MonoBehaviour
 
 
                 break;
-
-            case SceneState.Combat:
-                break;
         }
     }
 

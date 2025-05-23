@@ -305,7 +305,6 @@ public class Player_Move : MonoBehaviour
                 Combat_Over.Instance.Show_Encounter(false);
             }
         }
-        Effect.SetActive(false);
     }
 
     private bool Check_For_Obstacles(Vector3 Start_Pos, Vector3 End_Pos, float _Angle)

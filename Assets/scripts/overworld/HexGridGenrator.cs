@@ -19,6 +19,7 @@ public class HexGrid : MonoBehaviour
 
     void Start()
     {
+        if (GameManager.Instance.GetOverworldGrid() != null) return;
         GenerateGrid();
         GenerateBiomes();
         GameManager.Instance.SetOverworldGrid(this);
