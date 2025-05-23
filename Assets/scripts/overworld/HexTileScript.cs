@@ -7,7 +7,7 @@ using static HexGrid;
 
 public class HexTileScript : MonoBehaviour
 {
-
+    public GameObject CombatIdentifier;
     
     public enum encounterType { none, combat, overworldEncounter};
     public enum subEncounter { healthUp, healthDown, goldUp, goldDown, gainItem, upgradeItem };
@@ -42,6 +42,11 @@ public class HexTileScript : MonoBehaviour
         if (randomValue >= 0.5 && randomValue < 0.75) 
         {
             assignedEncounter = encounterType.combat;
+            // Add model here
+            GameObject temp = Instantiate(CombatIdentifier);
+            temp.transform.parent = transform;
+            temp.transform.eulerAngles = new Vector3(90, 0, 0);
+            temp.transform.localPosition = new Vector3(0, 0, 0.0125f);
         }
 
         if (randomValue >= 0.75 && randomValue < 1)

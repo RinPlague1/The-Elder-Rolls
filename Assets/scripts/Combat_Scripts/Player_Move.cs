@@ -13,7 +13,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Player_Move : MonoBehaviour
 {
+    public GameObject[] AllyCharacters;
     public GameObject Player;
+    private bool PlayersAdded = false;
 
     public GameObject Movement_Manager;
     private int Speed = 6;
@@ -48,11 +50,11 @@ public class Player_Move : MonoBehaviour
     GameObject Effect;
 
     private void Start()
-    {
-        Current_Turn = Player;
+    {        
         _Move_Button.onClick.AddListener(Move);
         _Attack_Button.onClick.AddListener(Attack);
         _Defend_Button.onClick.AddListener(Defend);
+        StartCoroutine(DelaySetCurrentTile());
     }
 
     private void Set_Enemies()
@@ -64,9 +66,12 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayersAdded) return;
         //StartCoroutine(Move_Camera()
         if (Enemy_List.Count == 0)
         { Set_Enemies(); }
+
+        if (Player == null) Player = Current_Turn;
 
         if (_Current_Player_Attributes == null)
         {
@@ -115,10 +120,11 @@ public class Player_Move : MonoBehaviour
             }
         }
 
-        if (Current_Turn != Player)
+        if (Current_Turn.CompareTag("Combat_Enemy"))
         {
+            Debug.Log("ENEMY TURN");
             Current_Tile = Find_Tile(Player);
-            while (Current_Turn != Player)
+            while (Current_Turn.CompareTag("Combat_Enemy"))
             {
                 End_Turn();
                 Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
@@ -128,7 +134,6 @@ public class Player_Move : MonoBehaviour
                 }
             }
             Debug.Log($"Movement Diactivated");
-            Speed = 6;
             Defending = false;
         }
     }
@@ -143,39 +148,28 @@ public class Player_Move : MonoBehaviour
 
             if (Target_Tile.Obstacle == Combat_Setup.Obstacles.None)
             {
-
-                    Current_Tile = Find_Tile(Current_Turn);
-
-                //if (Enemy_Check())
-                //{
-
-                    bool Checker = true;
-                    if (Checker)
-                    {
-                        if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
-                        {
-                            StopAllCoroutines();
-                            StartCoroutine(Move_To_Tile(Target_Tile));
-                        }
-                        else
-                        { }
-                    }
-                    else
-                    { Debug.Log($"Tile is not free"); }
+                Current_Tile = Find_Tile(Current_Turn);
+                Debug.Log(Current_Tile);
+                if (Check_Adjacent(Current_Tile.Coordinates, Target_Tile.Coordinates))
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(Move_To_Tile(Target_Tile));
+                }
+                else{
+                    Debug.Log("Tile Occupied");
+                }
 
 
 
-                    if (Speed == 0)
-                    {
-                        Target_Tile = null;
-                        Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
-                        Debug.Log($"End Player Turn");
-                    }
-                //}
-                //else
-                //{
-                //    Debug.Log($"Cannot move to a tile that has an enemy present");
-                //}
+                if (Speed == 0)
+                {
+                    Target_Tile = null;
+                    Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                    if (Current_Turn.CompareTag("Combat_Player")) Player = Current_Turn;
+                    Camera.main.transform.position = Current_Turn.transform.position + new Vector3(0,50,0);
+                    Speed = 6;
+                    Debug.Log($"End Player Turn");
+                }
             }
             else
             {
@@ -280,6 +274,9 @@ public class Player_Move : MonoBehaviour
                         }
                         Speed = 0;
                         Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+                        Camera.main.transform.position = Current_Turn.transform.position + new Vector3(0, 50, 0);
+                        if (Current_Turn.CompareTag("Combat_Player")) Player = Current_Turn;
+                        Speed = 6;
                     }
                 }
             }
@@ -341,6 +338,9 @@ public class Player_Move : MonoBehaviour
         Defending = true;
         Speed = 0;
         Current_Turn = _Turn_Order.Next_Turn(Current_Turn);
+        Camera.main.transform.position = Current_Turn.transform.position + new Vector3(0, 50, 0);
+        if (Current_Turn.CompareTag("Combat_Player")) Player = Current_Turn;
+        Speed = 6;
         Effect.SetActive(false);
     }
 
@@ -391,9 +391,11 @@ public class Player_Move : MonoBehaviour
 
     public Combat_Tile_Script Find_Tile(GameObject _Obj)
     {
-        Ray Starting_Ray = new UnityEngine.Ray(_Obj.transform.position + Vector3.up, new Vector3(0, -5, 0));
+        Ray Starting_Ray = new UnityEngine.Ray(_Obj.transform.position + 10*Vector3.up, new Vector3(0, -50, 0));
+        Debug.DrawRay(_Obj.transform.position + 10*Vector3.up, new Vector3(0,-50,0),Color.red,300);
         if (Physics.Raycast(Starting_Ray, out RaycastHit Hit_Start))
         {
+            Debug.Log("Hit Object!: " + Hit_Start.collider.transform.name);
             if (Hit_Start.collider.CompareTag("Combat_Tile"))
             {
                 Current_Tile = null;
@@ -404,6 +406,21 @@ public class Player_Move : MonoBehaviour
             }
         }
         return Current_Tile;
+    }
+
+    bool WaitForAllyListToBeAdd()
+    {
+        if (AllyCharacters.Length > 3) return true;
+
+        return false;
+    }
+
+    public IEnumerator DelaySetCurrentTile()
+    {
+        yield return new WaitUntil(WaitForAllyListToBeAdd);
+        Current_Turn = AllyCharacters[0];
+        Debug.Log("Set Current Turn Now");
+        PlayersAdded = true;
     }
 
 }

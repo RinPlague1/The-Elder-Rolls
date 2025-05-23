@@ -1,6 +1,7 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 //using static Combat_Setup;
 
@@ -19,6 +20,7 @@ public class Combat_Setup : MonoBehaviour
 
     public enum Obstacles { Log, Wall, Fence, River, Bridge, None}
 
+    public List<GameObject> AllPlayers;
     public GameObject Player;
 
     public List<GameObject> Enemies = new List<GameObject>();
@@ -26,7 +28,7 @@ public class Combat_Setup : MonoBehaviour
     public List<GameObject> Turns = new List<GameObject>();
 
 
-
+    public Player_Move _PlayerMove;
 
     private Dictionary<Vector2Int, Combat_Tile_Script> Combat_Tiles = new Dictionary<Vector2Int, Combat_Tile_Script>();
 
@@ -38,10 +40,12 @@ public class Combat_Setup : MonoBehaviour
 
     public Enemy_Script _Enemy_Script;
 
+    public GameManager GameManager;
+
 
     void Set_Initial_Player_Position(Vector2Int Coords)
     {
-        Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
+        //Player.transform.position = new UnityEngine.Vector3(0.05f +Coords.x, 0,0.05f + Coords.y);
         
         int Enemy_Count = (int)UnityEngine.Random.Range(1,3);
 
@@ -72,8 +76,28 @@ public class Combat_Setup : MonoBehaviour
             Debug.LogError("Enemy_Generation component not found!");
         }
 
+        // Get player models n allat
+        GameManager = GameManager.Instance;
+        List<GameManager.PartyMember> Party = GameManager.GetFullParty();
+        int cycles = 0;
+        foreach (GameManager.PartyMember memba in Party)
+        {
+            if (memba != null)
+            {
+                GameObject clone = Instantiate(memba.playerObject);
+                clone.tag = "Combat_Player";
+                clone.transform.position = new Vector3(cycles, 0, 0);
+                clone.GetComponent<Collider>().enabled = false;
+                AllPlayers.Add(clone);
+                cycles++;
+            }
+        }
+        _PlayerMove.AllyCharacters = AllPlayers.ToArray();
+
         Generate_Combat_Grid();
         Set_Initial_Player_Position(new Vector2Int(0, 0));
+
+
         Turns = Turn_Order.Set_Turn_Order();
         for (int i = 0; i < Enemies.Count; i++)
         {
@@ -98,7 +122,7 @@ public class Combat_Setup : MonoBehaviour
                 Combat_Tile.transform.Rotate(0f, 0f, 0f);
 
 
-                _MeshRenderer = TileGO.GetComponentInChildren<       MeshRenderer>();
+                _MeshRenderer = TileGO.GetComponentInChildren<MeshRenderer>();
                 _MeshRenderer.enabled = false;
                 _MeshRenderer.enabled = true;
                 Tiles.Add(Combat_Tile);

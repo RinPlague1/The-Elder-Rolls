@@ -4987,6 +4987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c56ead142b45df4eb413bc1fb5ee474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CombatIdentifier: {fileID: 4942984815640395041, guid: dfe9388776d734e4080e8e6a873d5e39, type: 3}
   coordinates: {x: 0, y: 0}
   biome: 0
   neighbors: []

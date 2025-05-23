@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1703387986503757907}
   - component: {fileID: 8975562740963842218}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BanditPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,6 +66,10 @@ PrefabInstance:
     - target: {fileID: 2881234430435566238, guid: 12f43d2d763d56b41bd0975e245a22ad, type: 3}
       propertyPath: m_Name
       value: CharacterBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881234430435566238, guid: 12f43d2d763d56b41bd0975e245a22ad, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7212455014078793103, guid: 12f43d2d763d56b41bd0975e245a22ad, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -148,6 +152,10 @@ PrefabInstance:
     - target: {fileID: 1439412801662562903, guid: 0989123e9f3bc194f8e42396ca44592a, type: 3}
       propertyPath: m_Name
       value: Thomas_Bandit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439412801662562903, guid: 0989123e9f3bc194f8e42396ca44592a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7823691284902001283, guid: 0989123e9f3bc194f8e42396ca44592a, type: 3}
       propertyPath: m_LocalPosition.x
