@@ -111,6 +111,7 @@ public class EncounterPopup : MonoBehaviour
         
         if (currentEncounterType == HexTileScript.encounterType.combat)
         {
+            GameManager.Instance.ToggleHexGrid();
             SceneManager.LoadScene(2);
         }
 

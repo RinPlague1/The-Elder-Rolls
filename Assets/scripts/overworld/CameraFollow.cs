@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [Header("Determine if to use camera or not")]
+    public bool UseCameraFollow = true;
+
     [Header("Follow Settings")]
     public Transform target;
     public float smoothSpeed = 0.125f;
@@ -19,7 +22,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null || UseCameraFollow == false) return;
 
         if (isTransitioning)
         {

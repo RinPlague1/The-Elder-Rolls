@@ -121,6 +121,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ToggleHexGrid()
+    {
+        if (GetOverworldGrid().gameObject.activeInHierarchy)
+        { overworldGrid.gameObject.SetActive(false); }
+        else
+        {
+            overworldGrid.gameObject.SetActive(true);
+        }
+    }
+
     public void CycleActivePartyMember()
     {
         if (party.Count == 0) return;
@@ -175,6 +185,7 @@ public class GameManager : MonoBehaviour
     public void SetOverworldGrid(HexGrid grid)
     {
         overworldGrid = grid;
+        DontDestroyOnLoad(overworldGrid.transform.parent);
     }
 
     public HexGrid GetOverworldGrid()

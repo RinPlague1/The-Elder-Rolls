@@ -85,6 +85,7 @@ public class Combat_Setup : MonoBehaviour
             if (memba != null)
             {
                 GameObject clone = Instantiate(memba.playerObject);
+                clone.GetComponent<PlayerController>().enabled = false;
                 clone.tag = "Combat_Player";
                 clone.transform.position = new Vector3(cycles, 0, 0);
                 clone.GetComponent<Collider>().enabled = false;

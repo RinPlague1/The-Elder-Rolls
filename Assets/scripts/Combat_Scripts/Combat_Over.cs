@@ -44,6 +44,7 @@ public class Combat_Over : MonoBehaviour
     {
         if (!Game_Over)
         {
+            GameManager.Instance.ToggleHexGrid();
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
         }
         else
