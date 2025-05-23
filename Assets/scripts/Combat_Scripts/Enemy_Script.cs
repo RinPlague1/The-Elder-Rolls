@@ -23,10 +23,22 @@ public enum Enemy_Attunement
     Necrotic
 }
 
+[System.Serializable]
+public enum Enemy_Name
+{
+    Bandit,
+    Rat,
+    Gorilla
+}
+
 public class Enemy_Script : MonoBehaviour
 {
+    [Header("Piece Models")]
+    public GameObject[] EnemyModels;
+
     [Header("Basic Info")]
     public Enemy_Type Enemy_Class = Enemy_Type.Melee;
+    public Enemy_Name Enemy_Name = Enemy_Name.Bandit;
 
 
     [Header("Vital Stats")]
@@ -35,6 +47,7 @@ public class Enemy_Script : MonoBehaviour
     public int Max_Mana = 20;
     public int Current_Mana;
     public int Experience = 5;
+    public int AttackDamage = 5;
 
     [Header("Magic System")]
     public Enemy_Attunement Primary = Enemy_Attunement.None;
@@ -141,7 +154,8 @@ public class Enemy_Script : MonoBehaviour
         {
             if (Is_Player[i] == Player_Tile && !_Move.Defending) 
             {
-                _Move.Set_Health(_Move.Get_Health() - 60);
+                _Move.Set_Health(_Move.Get_Health() - AttackDamage);
+                Debug.Log("Player Attacked, New Health: " + _Move.Get_Health());
                 //if (_Player_Attributes.TakeDamage(_Player_Attributes.maxHealth))
                 //{
                 //    break;
@@ -210,6 +224,32 @@ public class Enemy_Script : MonoBehaviour
                 Max_Mana = 200;
                 break;
 
+        }
+
+        GameObject temp;
+        switch (Enemy_Name)
+        { 
+            case Enemy_Name.Bandit:
+                Max_Health = 20;
+                AttackDamage = 10;
+                Max_Mana = 10;
+                temp = Instantiate(EnemyModels[0], transform);
+                temp.transform.localPosition = new Vector3(0, 1.25f, 0);
+                break;
+            case Enemy_Name.Rat:
+                Max_Health = 15;
+                AttackDamage = 15;
+                Max_Mana = 20;
+                temp = Instantiate(EnemyModels[1], transform);
+                temp.transform.localPosition = Vector3.zero;
+                break;
+            case Enemy_Name.Gorilla:
+                Max_Health = 50;
+                AttackDamage = 25;
+                Max_Mana = 100;
+                temp = Instantiate(EnemyModels[2], transform);
+                temp.transform.localPosition = Vector3.zero;
+                break;
         }
         Current_Health = Max_Health;
         Current_Mana = Max_Mana;

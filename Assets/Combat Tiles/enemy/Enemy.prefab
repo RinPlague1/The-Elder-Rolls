@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6999428097026594093}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -120,3 +120,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd59edf45485ca49b05d2febaae2e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyModels:
+  - {fileID: 4942984815640395041, guid: dfe9388776d734e4080e8e6a873d5e39, type: 3}
+  - {fileID: 6676474213254242908, guid: 01270fc228cd56c48a9dea335d9284b1, type: 3}
+  - {fileID: 8192651704896977628, guid: a12df28f6dcf0154daea44d72f0d786a, type: 3}
+  Enemy_Class: 0
+  Enemy_Name: 0
+  Max_Health: 10
+  Current_Health: 0
+  Max_Mana: 20
+  Current_Mana: 0
+  Experience: 5
+  Primary: 0
+  Secondary: 0
+  Inventory: []
+  Gold: 10
+  Capacity: 20
+  Galactic_Color: {r: 0, g: 1, b: 1, a: 1}
+  Eldritch_Color: {r: 1, g: 0, b: 1, a: 1}
+  Necrotic_Color: {r: 0, g: 1, b: 0, a: 1}
+  _Setup: {fileID: 0}
+  _Move: {fileID: 0}
+  _Player: {fileID: 0}
+  _Turn_Order: {fileID: 0}
+  _Speed: 0
+  _Pathfinding: {fileID: 0}
+  _Path: []
+  _Container: {fileID: 0}

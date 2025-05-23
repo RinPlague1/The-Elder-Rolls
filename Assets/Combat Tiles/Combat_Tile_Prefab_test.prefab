@@ -4942,6 +4942,9 @@ MonoBehaviour:
   F_Cost: 0
   Coordinates: {x: 0, y: 0}
   Obstacle: 0
+  BlockingObjects:
+  - {fileID: 881719627469190481, guid: 7066d8069abb82449bd11fc0b28ebe6a, type: 3}
+  - {fileID: 5958713491344308002, guid: 385ad63bef45b78489cf137b80aa3874, type: 3}
   Neighbours: []
 --- !u!64 &-5198148807734885052
 MeshCollider:

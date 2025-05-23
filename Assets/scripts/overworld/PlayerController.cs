@@ -214,6 +214,7 @@ public class PlayerController : MonoBehaviour
             if (IsValidMove(selectedTile))
             {
                 targetTile = selectedTile;
+                targetTile.transform.GetChild(0).gameObject.SetActive(true);
                 playerAttrib.movesLeft--;
                 UpdateMovesUI();
                 StartCoroutine(MoveToTile(targetTile));
@@ -258,6 +259,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = endRot;
 
         currentTile = destination;
+        targetTile.transform.GetChild(0).gameObject.SetActive(false);
         targetTile = null;
         OnStepOntoTile(destination);
         isMoving = false;

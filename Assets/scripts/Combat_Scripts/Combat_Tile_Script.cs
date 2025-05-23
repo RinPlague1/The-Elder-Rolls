@@ -16,6 +16,8 @@ public class Combat_Tile_Script : MonoBehaviour
 
     public Obstacles Obstacle;
 
+    public GameObject[] BlockingObjects;
+
     public List<Combat_Tile_Script> Neighbours = new List<Combat_Tile_Script>();
 
     public void Initialize_Tile(Vector2Int Coords)
@@ -86,6 +88,13 @@ public class Combat_Tile_Script : MonoBehaviour
             _ => Color.white,
         };
         GetComponent<Renderer>().material.color = Tile_Colour;
+        // Make an object appear on the tile to show its "blocked"
+        if (Obstacle == Obstacles.Log)
+        {
+            int IndexOfBlocker = Random.Range(0, BlockingObjects.Length);
+            GameObject blockingObj = Instantiate(BlockingObjects[IndexOfBlocker],transform);
+            blockingObj.transform.localPosition = new(0,0.25f + (IndexOfBlocker * 0.75f),0);
+        }
     }
 
 

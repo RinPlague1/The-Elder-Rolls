@@ -2913,6 +2913,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057993555}
   m_CullTransparentMesh: 1
+--- !u!1001 &1213214060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1548519218}
+    m_Modifications:
+    - target: {fileID: 431636395602846037, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_Name
+      value: MaleMainCharacterPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+--- !u!4 &1213214061 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1834487603008426094, guid: 449a1693b2abd8d4ebfebbeafbdd4787, type: 3}
+  m_PrefabInstance: {fileID: 1213214060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1241666864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3656,7 +3718,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548519213}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3711,7 +3773,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 1}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1213214061}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1556428724
@@ -5393,6 +5456,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda10acb1d097a44a06ef0da3bc3dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memberIdentifier: 0
+  electedMember:
+    slot: 0
+    attributes: {fileID: 0}
+    playerObject: {fileID: 0}
   CharacterName: CHARNAME
   CharacterHealth: 100
   CharacterMaxHealth: 100
@@ -5674,6 +5742,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda10acb1d097a44a06ef0da3bc3dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memberIdentifier: 0
+  electedMember:
+    slot: 0
+    attributes: {fileID: 0}
+    playerObject: {fileID: 0}
   CharacterName: CHARNAME
   CharacterHealth: 100
   CharacterMaxHealth: 100
@@ -5804,6 +5877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda10acb1d097a44a06ef0da3bc3dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memberIdentifier: 0
+  electedMember:
+    slot: 0
+    attributes: {fileID: 0}
+    playerObject: {fileID: 0}
   CharacterName: CHARNAME
   CharacterHealth: 100
   CharacterMaxHealth: 100
@@ -6869,6 +6947,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda10acb1d097a44a06ef0da3bc3dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memberIdentifier: 0
+  electedMember:
+    slot: 0
+    attributes: {fileID: 0}
+    playerObject: {fileID: 0}
   CharacterName: Character 1
   CharacterHealth: 100
   CharacterMaxHealth: 100

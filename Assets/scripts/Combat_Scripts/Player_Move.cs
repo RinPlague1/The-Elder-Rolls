@@ -103,6 +103,7 @@ public class Player_Move : MonoBehaviour
 
 
                     Vector2Int Target_Coord_Vec = Target_Tile.Coordinates;
+                    Player.transform.LookAt(Target_Tile.transform);
                     Effect = Target_Tile.transform.GetChild(0).gameObject;
                     Effect.SetActive(true);
                 }
